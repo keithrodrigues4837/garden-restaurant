@@ -13,7 +13,7 @@ export default function Footer() {
             width={790}
             height={428}
             unoptimized
-            className="h-16 w-auto"
+            className="h-20 w-auto"
           />
           <p className="mt-3 text-sm">{restaurant.tagline}</p>
         </div>
