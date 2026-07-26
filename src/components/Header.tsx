@@ -20,14 +20,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-forest text-cream shadow-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="flex items-center rounded-lg bg-white/95 px-2 py-1.5 shadow-sm">
+        <Link href="/" className="flex items-center">
           <Image
             src="/logo-cropped.png"
             alt={restaurant.name}
-            width={798}
-            height={436}
+            width={790}
+            height={428}
             priority
-            className="h-10 w-auto sm:h-12"
+            unoptimized
+            className="h-12 w-auto sm:h-14"
           />
         </Link>
 

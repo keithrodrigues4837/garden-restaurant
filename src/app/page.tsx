@@ -65,7 +65,8 @@ export default function Home() {
             Perfect for Family Get-Togethers
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-forest/80">
-            With seating for {restaurant.seating} guests at La Ben Resort, Colva, we welcome
+            With seating for {restaurant.seating}{" "}
+            guests at La Ben Resort, Colva, we welcome
             intimate gatherings and family celebrations alike — or skip the wait and order
             your favourites for pickup.
           </p>

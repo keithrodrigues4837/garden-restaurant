@@ -7,15 +7,14 @@ export default function Footer() {
     <footer className="bg-forest-dark text-cream/80">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          <div className="inline-block rounded-lg bg-white/95 px-2 py-1.5">
-            <Image
-              src="/logo-cropped.png"
-              alt={restaurant.name}
-              width={798}
-              height={436}
-              className="h-10 w-auto"
-            />
-          </div>
+          <Image
+            src="/logo-cropped.png"
+            alt={restaurant.name}
+            width={790}
+            height={428}
+            unoptimized
+            className="h-12 w-auto"
+          />
           <p className="mt-3 text-sm">{restaurant.tagline}</p>
         </div>
 
