@@ -4,13 +4,14 @@
   --background: #faf7ee;
   --foreground: #22301f;
 
-  --color-forest: #1e3a29;
-  --color-forest-dark: #12261a;
-  --color-sage: #8fa877;
-  --color-sage-light: #dbe6cd;
+  --color-forest: #00703b;
+  --color-forest-dark: #004d29;
+  --color-sage: #52b462;
+  --color-sage-light: #dff3d8;
   --color-cream: #faf7ee;
   --color-gold: #c9862f;
   --color-gold-dark: #a86a1f;
+  --color-brand: #00a859;
 }
 
 @theme inline {
@@ -23,6 +24,7 @@
   --color-cream: var(--color-cream);
   --color-gold: var(--color-gold);
   --color-gold-dark: var(--color-gold-dark);
+  --color-brand: var(--color-brand);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 }

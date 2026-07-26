@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { restaurant } from "@/lib/restaurant-info";
 
 export default function Footer() {
@@ -6,8 +7,16 @@ export default function Footer() {
     <footer className="bg-forest-dark text-cream/80">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          <h2 className="font-display text-lg font-semibold text-cream">{restaurant.name}</h2>
-          <p className="mt-2 text-sm">{restaurant.tagline}</p>
+          <div className="inline-block rounded-lg bg-white/95 px-2 py-1.5">
+            <Image
+              src="/logo-cropped.png"
+              alt={restaurant.name}
+              width={798}
+              height={436}
+              className="h-10 w-auto"
+            />
+          </div>
+          <p className="mt-3 text-sm">{restaurant.tagline}</p>
         </div>
 
         <div className="text-sm">
