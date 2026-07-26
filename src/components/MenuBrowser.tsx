@@ -13,7 +13,7 @@ export default function MenuBrowser() {
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between rounded-xl bg-sage-light/50 px-4 py-3">
+      <div className="mb-6 flex items-center justify-between rounded-xl bg-sage-light/50 px-4 py-3">
         <span className="text-sm font-medium text-forest">Show vegetarian only</span>
         <button
           type="button"
@@ -32,6 +32,22 @@ export default function MenuBrowser() {
         </button>
       </div>
 
+      <nav className="mb-8 flex gap-2 overflow-x-auto pb-2">
+        {menu.map((category) => (
+          <a
+            key={category.id}
+            href={`#${category.id}`}
+            className="shrink-0 rounded-full border border-sage-light px-3 py-1.5 text-xs font-medium text-forest/80 transition hover:border-forest hover:text-forest"
+          >
+            {category.name}
+          </a>
+        ))}
+      </nav>
+
+      <p className="mb-8 text-xs text-forest/50">
+        Prices exclude local taxes, which are applied at pickup.
+      </p>
+
       {menu.map((category) => {
         const items = vegOnly ? category.items.filter((i) => i.veg) : category.items;
         if (items.length === 0) return null;
@@ -39,6 +55,9 @@ export default function MenuBrowser() {
         return (
           <section key={category.id} id={category.id} className="mb-10 scroll-mt-24">
             <h2 className="font-display text-2xl font-semibold text-forest">{category.name}</h2>
+            {category.note && (
+              <p className="mt-1 text-xs italic text-forest/50">{category.note}</p>
+            )}
             <div className="mt-4 divide-y divide-sage-light">
               {items.map((item) => {
                 const qty = qtyOf(item.id);
@@ -51,7 +70,14 @@ export default function MenuBrowser() {
                       <div>
                         <div className="flex items-center gap-2">
                           <h3 className="font-medium text-forest">{item.name}</h3>
-                          {item.spicy && <span title="Spicy">🌶️</span>}
+                          {item.special && (
+                            <span
+                              title="Chef's Special"
+                              className="rounded-full bg-gold/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-dark"
+                            >
+                              Chef&apos;s Special
+                            </span>
+                          )}
                         </div>
                         <p className="mt-1 text-sm text-forest/70">{item.description}</p>
                         <p className="mt-1 text-sm font-semibold text-forest">₹{item.price}</p>
