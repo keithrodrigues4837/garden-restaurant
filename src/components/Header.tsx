@@ -37,7 +37,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-cream/90 transition hover:text-gold"
+              className="text-base font-medium text-cream/90 transition hover:text-gold lg:text-lg"
             >
               {link.label}
             </Link>
@@ -79,7 +79,7 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded px-2 py-3 text-sm font-medium text-cream/90 hover:bg-forest-dark"
+              className="rounded px-2 py-3 text-base font-medium text-cream/90 hover:bg-forest-dark"
             >
               {link.label}
             </Link>
