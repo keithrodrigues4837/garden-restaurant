@@ -6,11 +6,12 @@
 
   --color-forest: #4a3423;
   --color-forest-dark: #2e2015;
-  --color-sage: #8a6a52;
-  --color-sage-light: #ede4dc;
+  --color-sage: #52b462;
+  --color-sage-light: #d9ede6;
   --color-cream: #faf7ee;
   --color-gold: #c9862f;
   --color-gold-dark: #a86a1f;
+  --color-gold-light: #f7e8c8;
   --color-brand: #00a859;
 }
 
@@ -24,6 +25,7 @@
   --color-cream: var(--color-cream);
   --color-gold: var(--color-gold);
   --color-gold-dark: var(--color-gold-dark);
+  --color-gold-light: var(--color-gold-light);
   --color-brand: var(--color-brand);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);

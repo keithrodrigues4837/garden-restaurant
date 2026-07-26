@@ -59,7 +59,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-sage-light/40">
+      <section className="bg-gold-light/60">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6">
           <h2 className="font-display text-3xl font-semibold text-forest">
             Perfect for Family Get-Togethers
