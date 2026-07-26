@@ -73,7 +73,7 @@ export default function MenuBrowser() {
                           {item.special && (
                             <span
                               title="Chef's Special"
-                              className="rounded-full bg-gold/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-dark"
+                              className="rounded-full bg-maroon/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-maroon"
                             >
                               Chef&apos;s Special
                             </span>

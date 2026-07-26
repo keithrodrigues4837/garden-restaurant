@@ -4,14 +4,16 @@
   --background: #faf7ee;
   --foreground: #22301f;
 
-  --color-forest: #4a3423;
-  --color-forest-dark: #2e2015;
+  --color-forest: #123a26;
+  --color-forest-dark: #0b2418;
   --color-sage: #52b462;
   --color-sage-light: #d9ede6;
   --color-cream: #faf7ee;
-  --color-gold: #c9862f;
-  --color-gold-dark: #a86a1f;
-  --color-gold-light: #f7e8c8;
+  --color-gold: #e0a83c;
+  --color-gold-dark: #b8842a;
+  --color-gold-light: #f9e3b8;
+  --color-maroon: #5c1620;
+  --color-maroon-light: #f3e0dc;
   --color-brand: #00a859;
 }
 
@@ -26,6 +28,8 @@
   --color-gold: var(--color-gold);
   --color-gold-dark: var(--color-gold-dark);
   --color-gold-light: var(--color-gold-light);
+  --color-maroon: var(--color-maroon);
+  --color-maroon-light: var(--color-maroon-light);
   --color-brand: var(--color-brand);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);

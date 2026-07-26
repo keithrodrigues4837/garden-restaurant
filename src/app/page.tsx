@@ -59,9 +59,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-gold-light/60">
+      <section className="bg-maroon-light/70">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6">
-          <h2 className="font-display text-3xl font-semibold text-forest">
+          <h2 className="font-display text-3xl font-semibold text-maroon">
             Perfect for Family Get-Togethers
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-forest/80">
@@ -72,7 +72,7 @@ export default function Home() {
           </p>
           <Link
             href="/menu"
-            className="mt-8 inline-block rounded-full bg-forest px-8 py-3 font-semibold text-cream transition hover:bg-forest-dark"
+            className="mt-8 inline-block rounded-full bg-maroon px-8 py-3 font-semibold text-cream transition hover:bg-maroon/90"
           >
             View Menu
           </Link>
