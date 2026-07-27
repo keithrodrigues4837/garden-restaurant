@@ -2,6 +2,20 @@
 
 Session paused here. Resume by picking up at "Next steps" below.
 
+## Update (2026-07-27, later) — online ordering paused
+Per the user's request, online pickup ordering is temporarily switched off via
+`restaurant.orderingEnabled = false` in `src/lib/restaurant-info.ts`. This is a
+single feature flag, not a deletion — all cart/checkout code (`CartContext`,
+`CartPanel`, `MobileCartBar`) is untouched and still fully wired up. With the
+flag off: the Menu page shows dish info only (no Add buttons/cart/checkout,
+full-width layout), and the Header CTA, Home page CTAs/copy, Footer link, and
+About page copy all switch to plain "View Menu" / menu-browsing language
+instead of promising ordering. **To bring ordering back**: flip
+`orderingEnabled` to `true` — everything reverts automatically, no other
+changes needed. Menu improvements added earlier this session (search,
+Chef's Specials filter, mobile cart bar, category-nav bug fix, a real
+horizontal-overflow bug fix) are all still in place underneath the flag.
+
 ## Update (2026-07-27)
 Added real photos and SEO/social metadata:
 - **Photos**: Sourced from the restaurant's own Google Business Profile listing
