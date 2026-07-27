@@ -15,6 +15,9 @@ export const restaurant = {
   // TODO: replace with the restaurant's real phone number
   phone: "+91 00000 00000",
   phoneIsPlaceholder: true,
+  // Online pickup ordering is paused for now — flip to true to bring back
+  // the cart/checkout UI on the Menu page and the ordering CTAs site-wide.
+  orderingEnabled: false,
   pickup: {
     mode: "asap" as const,
     note: "Pickup orders are prepared fresh — ready in about 25–35 minutes.",

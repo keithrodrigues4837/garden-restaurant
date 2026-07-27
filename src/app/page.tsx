@@ -48,7 +48,7 @@ export default function Home() {
               href="/menu"
               className="rounded-full bg-gold px-8 py-3 font-semibold text-forest-dark transition hover:bg-gold-dark"
             >
-              Order for Pickup
+              {restaurant.orderingEnabled ? "Order for Pickup" : "View Menu"}
             </Link>
             <Link
               href="/contact"
@@ -103,8 +103,10 @@ export default function Home() {
             </h2>
             <p className="mt-4 max-w-2xl text-forest/80">
               With seating for {restaurant.seating} guests at La Ben Resort, Colva, we welcome
-              intimate gatherings and family celebrations alike — or skip the wait and order
-              your favourites for pickup.
+              intimate gatherings and family celebrations alike
+              {restaurant.orderingEnabled
+                ? " — or skip the wait and order your favourites for pickup."
+                : "."}
             </p>
             <Link
               href="/menu"

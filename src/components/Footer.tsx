@@ -30,7 +30,7 @@ export default function Footer() {
           <p>{restaurant.address.line1}</p>
           <p>{restaurant.address.line2}</p>
           <Link href="/menu" className="mt-4 inline-block font-semibold text-gold hover:text-gold-dark">
-            Order for Pickup &rarr;
+            {restaurant.orderingEnabled ? "Order for Pickup" : "View Menu"} &rarr;
           </Link>
         </div>
       </div>

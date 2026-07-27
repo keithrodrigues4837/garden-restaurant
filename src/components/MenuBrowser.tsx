@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { menu } from "@/lib/menu-data";
 import { useCart } from "@/context/CartContext";
+import { restaurant } from "@/lib/restaurant-info";
 import VegBadge from "@/components/VegBadge";
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
@@ -130,39 +131,41 @@ export default function MenuBrowser() {
                     </div>
                   </div>
 
-                  <div className="shrink-0">
-                    {qty === 0 ? (
-                      <button
-                        type="button"
-                        onClick={() => add(item.id)}
-                        className="rounded-full border border-forest px-4 py-1.5 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream"
-                      >
-                        Add
-                      </button>
-                    ) : (
-                      <div className="flex items-center gap-2 rounded-full border border-forest px-1 py-1">
+                  {restaurant.orderingEnabled && (
+                    <div className="shrink-0">
+                      {qty === 0 ? (
                         <button
                           type="button"
-                          aria-label={`Decrease ${item.name} quantity`}
-                          onClick={() => setQty(item.id, qty - 1)}
-                          className="flex h-6 w-6 items-center justify-center rounded-full text-forest hover:bg-sage-light"
-                        >
-                          −
-                        </button>
-                        <span className="w-4 text-center text-sm font-semibold text-forest">
-                          {qty}
-                        </span>
-                        <button
-                          type="button"
-                          aria-label={`Increase ${item.name} quantity`}
                           onClick={() => add(item.id)}
-                          className="flex h-6 w-6 items-center justify-center rounded-full text-forest hover:bg-sage-light"
+                          className="rounded-full border border-forest px-4 py-1.5 text-sm font-semibold text-forest transition hover:bg-forest hover:text-cream"
                         >
-                          +
+                          Add
                         </button>
-                      </div>
-                    )}
-                  </div>
+                      ) : (
+                        <div className="flex items-center gap-2 rounded-full border border-forest px-1 py-1">
+                          <button
+                            type="button"
+                            aria-label={`Decrease ${item.name} quantity`}
+                            onClick={() => setQty(item.id, qty - 1)}
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-forest hover:bg-sage-light"
+                          >
+                            −
+                          </button>
+                          <span className="w-4 text-center text-sm font-semibold text-forest">
+                            {qty}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label={`Increase ${item.name} quantity`}
+                            onClick={() => add(item.id)}
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-forest hover:bg-sage-light"
+                          >
+                            +
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}

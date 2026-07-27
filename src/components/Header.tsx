@@ -8,7 +8,7 @@ import { useCart } from "@/context/CartContext";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/menu", label: "Menu & Order" },
+  { href: "/menu", label: restaurant.orderingEnabled ? "Menu & Order" : "Menu" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Location" },
 ];
@@ -48,8 +48,8 @@ export default function Header() {
           href="/menu"
           className="relative hidden items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-forest-dark transition hover:bg-gold-dark md:inline-flex"
         >
-          Order Pickup
-          {itemCount > 0 && (
+          {restaurant.orderingEnabled ? "Order Pickup" : "View Menu"}
+          {restaurant.orderingEnabled && itemCount > 0 && (
             <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-forest-dark px-1 text-xs font-bold text-cream">
               {itemCount}
             </span>
