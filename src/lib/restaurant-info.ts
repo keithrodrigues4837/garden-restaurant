@@ -12,9 +12,8 @@ export const restaurant = {
     full: "La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India",
     mapsQuery: "La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India",
   },
-  // TODO: replace with the restaurant's real phone number
-  phone: "+91 00000 00000",
-  phoneIsPlaceholder: true,
+  phone: "+91 83790 43188",
+  phoneIsPlaceholder: false,
   // Online pickup ordering is paused for now — flip to true to bring back
   // the cart/checkout UI on the Menu page and the ordering CTAs site-wide.
   orderingEnabled: false,
