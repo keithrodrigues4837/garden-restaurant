@@ -77,8 +77,9 @@ seats 60. Pickup ordering only (no delivery), ASAP pickup timing (no scheduled s
 7. ✅ Git initialized, committed after every change (see `git log`).
 
 ## Known placeholders — still need real values from the user
-- **Phone number**: `src/lib/restaurant-info.ts` has `+91 00000 00000` marked as placeholder.
-  Shown with a visible "(placeholder)" label in the footer/contact page until replaced.
+- ✅ **Phone number**: done (2026-07-27) — real number `+91 83790 43188` is now in
+  `src/lib/restaurant-info.ts`, `phoneIsPlaceholder` is `false`, and it now appears in the
+  Restaurant JSON-LD structured data too.
 
 ## Next steps (in order)
 1. **AI assistant (in progress, blocked)** — user chose "smart menu + AI Q&A/upsell
@@ -99,7 +100,6 @@ seats 60. Pickup ordering only (no delivery), ASAP pickup timing (no scheduled s
 3. **Local testing pass** — click through full flow again after AI assistant is added.
 4. **Deploy to Vercel** — push to a git remote (none configured yet, this repo is local-only),
    connect Vercel, set `ANTHROPIC_API_KEY` as an env var there too.
-5. Replace the placeholder phone number once the user provides it.
 
 ## Environment gotcha (Windows/PowerShell)
 Each PowerShell tool call starts a fresh process — `$env:Path` changes don't persist
