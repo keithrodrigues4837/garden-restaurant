@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { restaurant } from "@/lib/restaurant-info";
 
 export const metadata: Metadata = {
-  title: `Location & Hours | ${restaurant.name}`,
+  title: "Location & Hours",
 };
 
 export default function Contact() {

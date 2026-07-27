@@ -16,9 +16,70 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: `${restaurant.name} | ${restaurant.tagline}`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${restaurant.name} | ${restaurant.tagline}`,
+    template: `%s | ${restaurant.name}`,
+  },
   description: restaurant.description,
+  keywords: [
+    "North Indian restaurant Goa",
+    "restaurant Colva",
+    "tandoori Goa",
+    "Indian food Colva Beach",
+    restaurant.name,
+  ],
+  openGraph: {
+    title: `${restaurant.name} | ${restaurant.tagline}`,
+    description: restaurant.description,
+    url: "/",
+    siteName: restaurant.name,
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${restaurant.name} | ${restaurant.tagline}`,
+    description: restaurant.description,
+  },
+};
+
+const restaurantSchema = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  name: restaurant.name,
+  servesCuisine: "North Indian",
+  priceRange: "₹₹",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: restaurant.address.line1,
+    addressLocality: "Colva",
+    addressRegion: "Goa",
+    postalCode: "403708",
+    addressCountry: "IN",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "11:00",
+    closes: "23:00",
+  },
+  // Phone number omitted until the real one replaces the restaurant-info.ts
+  // placeholder — a fake number should never reach search engine structured data.
+  ...(restaurant.phoneIsPlaceholder ? {} : { telephone: restaurant.phone }),
+  url: siteUrl,
+  image: `${siteUrl}/opengraph-image.jpg`,
 };
 
 export default function RootLayout({
@@ -32,6 +93,10 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
+        />
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>

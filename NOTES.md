@@ -2,6 +2,34 @@
 
 Session paused here. Resume by picking up at "Next steps" below.
 
+## Update (2026-07-27)
+Added real photos and SEO/social metadata:
+- **Photos**: Sourced from the restaurant's own Google Business Profile listing
+  (publicly posted by the business account, several with "THE GARDEN RESTAURANT"
+  branding baked in) — downloaded into `public/images/` and wired into Home, About,
+  and Menu pages (hero banners, highlight cards, food shots). No delivery/backend
+  changes.
+- **SEO/OG metadata**: `src/app/layout.tsx` now sets `metadataBase` (via
+  `NEXT_PUBLIC_SITE_URL` env var, falls back to localhost — **set this env var on
+  Vercel once deployed** so social share links point at the real domain), full
+  Open Graph + Twitter card metadata, and a `Restaurant` JSON-LD structured-data
+  script. Per-page titles (`about`, `contact`, `menu`) were simplified to avoid
+  double-appending the restaurant name now that the root layout uses a title
+  template.
+- **OG image**: `src/app/opengraph-image.jpg` — a 1200×630 crop of the restaurant's
+  entrance sign, generated once with `sharp` (already in node_modules via Next's
+  image optimizer) from `public/images/entrance-day.jpg`. Confirmed Next
+  auto-detects it and serves correct `og:image` dimensions.
+- **Structured data note**: `telephone` is deliberately omitted from the JSON-LD
+  until `restaurant-info.ts`'s placeholder phone number is replaced — a fake
+  number should never reach search engines. Update `restaurantSchema` in
+  `layout.tsx` once the real number lands (it already re-includes automatically
+  once `phoneIsPlaceholder` is set to `false`).
+- **Turned out already done**: the Contact page already had a working Google Maps
+  embed (no API key needed, `output=embed` pattern) — no work needed there.
+- **Still skipped, by user's choice this round**: order backend (orders still go
+  nowhere) and the AI assistant feature remain exactly as before.
+
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
 La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India. Open daily 11:00 AM–11:00 PM,
