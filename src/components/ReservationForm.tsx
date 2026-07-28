@@ -27,6 +27,24 @@ const inputClass =
   "mt-1 w-full rounded-lg border border-sage-light px-3 py-2 text-sm text-forest focus:border-forest focus:outline-none";
 const labelClass = "text-sm font-medium text-forest";
 
+const OPEN_TIME = "13:00";
+const CLOSE_TIME = "23:00";
+
+function toMinutes(value: string) {
+  const [h, m] = value.split(":").map(Number);
+  return h * 60 + m;
+}
+
+const TIME_OPTIONS = (() => {
+  const options: string[] = [];
+  for (let minutes = toMinutes(OPEN_TIME); minutes <= toMinutes(CLOSE_TIME); minutes += 30) {
+    const h = String(Math.floor(minutes / 60)).padStart(2, "0");
+    const m = String(minutes % 60).padStart(2, "0");
+    options.push(`${h}:${m}`);
+  }
+  return options;
+})();
+
 export default function ReservationForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -106,16 +124,23 @@ export default function ReservationForm() {
           <label htmlFor="time" className={labelClass}>
             Time
           </label>
-          <input
+          <select
             id="time"
-            type="time"
             required
-            min="11:00"
-            max="22:30"
             value={time}
             onChange={(e) => setTime(e.target.value)}
             className={inputClass}
-          />
+          >
+            <option value="" disabled>
+              Select a time
+            </option>
+            {TIME_OPTIONS.map((t) => (
+              <option key={t} value={t}>
+                {formatTime(t)}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-forest/50">We&apos;re open {restaurant.hoursShort}.</p>
         </div>
       </div>
 
