@@ -1,22 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import RotatingImage from "@/components/RotatingImage";
 import { restaurant } from "@/lib/restaurant-info";
 
 const highlights = [
   {
     title: "Sizzling Tandoori",
     description: "Chicken, prawns, and paneer, char-roasted fresh in the clay oven.",
-    image: "/images/food-tikka-skewers.jpg",
+    images: ["/images/instagram/ig-flaming-sizzler.png", "/images/instagram/ig-seekh-kebab-curry.png"],
   },
   {
     title: "Rich, Slow-Cooked Gravies",
     description: "Classic North Indian curries — vegetarian and non-vegetarian.",
-    image: "/images/food-dal-makhani.jpg",
+    images: ["/images/instagram/ig-palak-kofta-gravy.png", "/images/instagram/ig-mutton-rack-curry.png"],
   },
   {
-    title: "Vegetarian Kebabs & Starters",
-    description: "Melt-in-the-mouth hara bhara kebabs and paneer tikkas, made fresh to order.",
-    image: "/images/food-hara-bhara-kebab.jpg",
+    title: "Kebabs & Starters",
+    description: "Crispy kebabs and starters, made fresh to order.",
+    images: ["/images/instagram/ig-bharwa-bhindi.png", "/images/instagram/ig-starter-plate.png"],
   },
 ];
 
@@ -69,17 +70,7 @@ export default function Home() {
               className="overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm"
             >
               <div className="relative aspect-[4/3] w-full">
-                <Image
-                  src={h.image}
-                  alt={h.title}
-                  fill
-                  sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 text-center">
-                <h2 className="font-display text-xl font-semibold text-forest">{h.title}</h2>
-                <p className="mt-2 text-sm text-forest/80">{h.description}</p>
+                <RotatingImage images={h.images} alt={h.title} />
               </div>
             </div>
           ))}
