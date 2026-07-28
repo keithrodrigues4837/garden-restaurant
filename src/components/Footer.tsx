@@ -29,8 +29,11 @@ export default function Footer() {
           <h3 className="mb-2 font-semibold text-cream">Location</h3>
           <p>{restaurant.address.line1}</p>
           <p>{restaurant.address.line2}</p>
-          <Link href="/menu" className="mt-4 inline-block font-semibold text-gold hover:text-gold-dark">
+          <Link href="/menu" className="mt-4 block font-semibold text-gold hover:text-gold-dark">
             {restaurant.orderingEnabled ? "Order for Pickup" : "View Menu"} &rarr;
+          </Link>
+          <Link href="/reserve" className="mt-2 block font-semibold text-gold hover:text-gold-dark">
+            Reserve a Table &rarr;
           </Link>
         </div>
       </div>

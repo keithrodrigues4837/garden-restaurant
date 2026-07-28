@@ -51,10 +51,10 @@ export default function Home() {
               {restaurant.orderingEnabled ? "Order for Pickup" : "View Menu"}
             </Link>
             <Link
-              href="/contact"
+              href="/reserve"
               className="rounded-full border border-cream/40 px-8 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold"
             >
-              Visit Us
+              Reserve a Table
             </Link>
           </div>
           <p className="mt-6 text-sm text-cream/70">{restaurant.hoursShort}</p>

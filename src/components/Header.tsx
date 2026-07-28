@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext";
 const links = [
   { href: "/", label: "Home" },
   { href: "/menu", label: restaurant.orderingEnabled ? "Menu & Order" : "Menu" },
+  { href: "/reserve", label: "Reserve" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Location" },
 ];
