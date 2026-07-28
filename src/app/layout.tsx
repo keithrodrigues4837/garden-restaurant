@@ -73,7 +73,7 @@ const restaurantSchema = {
       "Saturday",
       "Sunday",
     ],
-    opens: "11:00",
+    opens: "13:00",
     closes: "23:00",
   },
   // Phone number omitted until the real one replaces the restaurant-info.ts
