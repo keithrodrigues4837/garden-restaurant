@@ -78,12 +78,33 @@ currently switched off (see below).
   `true`. Ask before building — don't assume email vs SMS vs "call to confirm".
 
 ## Next steps
-Deployment is done (see top of file) and a production click-through (Home, Menu —
-images, WhatsApp button) came back clean. Nothing outstanding except the two
-deliberately-deferred features below — only revisit if the user brings them up.
+Deployment is done (see top of file), Reserve a Table is live (see item 11 above),
+and a production click-through (Home, Menu, Reserve) came back clean. Nothing
+outstanding except the two deliberately-deferred features below — only revisit if
+the user brings them up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+## 2026-07-28 session summary
+Picked up the deployment that was paused at the end of the prior session and
+finished it, then shipped two feature requests:
+1. **Deployment** — created the GitHub repo, pushed via SSH (see "Git auth
+   gotcha"), imported into Vercel, deployed, set `NEXT_PUBLIC_SITE_URL`, verified
+   production.
+2. **Header/footer color exploration** — user asked to recolor the header/footer.
+   Followed [[feedback-color-iteration-workflow]]: built an artifact with four
+   named, grounded directions (Deep Forest/current, Tandoor Clay, Spice Market
+   Espresso, Colva Tide) instead of guessing one edit. User picked **Tandoor
+   Clay**, it was implemented and verified, then the user changed their mind
+   ("keep the previous design as it was") before it was pushed — reverted
+   cleanly, confirmed via `git diff --stat` showing zero changes. **Net result:
+   header/footer are still Deep Forest, unchanged from before this session** —
+   don't assume Tandoor Clay is live, and don't re-propose a recolor unprompted.
+3. **Reserve a Table** — added per item 11 above, pushed live.
+
+Also noticed the stray `preview.html` (see below) — flagged to the user, not
+resolved either way.
 
 ## Environment gotcha (Windows/PowerShell)
 Each PowerShell tool call starts a fresh process — `$env:Path` changes don't persist
