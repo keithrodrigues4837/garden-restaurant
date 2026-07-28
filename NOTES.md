@@ -9,9 +9,10 @@ metadata resolves correctly in production (verified).
 
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
-La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India. Open daily 11:00 AM–11:00 PM,
-seats 60. Built as a menu/info site; online pickup ordering exists in code but is
-currently switched off (see below).
+La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India. Open daily 1:00 PM–11:00 PM,
+seats 60 (hours changed from 11:00 AM–11:00 PM on 2026-07-29 — see that session's
+summary below). Built as a menu/info site; online pickup ordering exists in code but
+is currently switched off (see below).
 
 ## Stack
 - Next.js 16 (App Router, TypeScript, Tailwind v4), scaffolded with `create-next-app`
@@ -64,6 +65,25 @@ currently switched off (see below).
     Linked from the header nav, the home hero ("Reserve a Table", replacing the
     old "Visit Us" button — location info is still one click away via the
     "Location" nav item), and the footer. Verified end-to-end in production.
+    The Time field is a `<select>` dropdown (not a native time input) listing
+    only half-hour slots from 1:00 PM to 11:00 PM, generated from `OPEN_TIME`/
+    `CLOSE_TIME` constants in the component — so guests physically cannot
+    choose or type a time outside business hours.
+12. **Homepage highlight tiles loop photos** — the three tiles below the hero
+    (`src/app/page.tsx` `highlights` array + new `src/components/RotatingImage.tsx`,
+    a client component) each cross-fade between two photos every 4s instead of
+    showing one static image, and no longer show a title/caption underneath
+    (removed per request — photo-only now). Images live in
+    `public/images/instagram/` (separate from the main `public/images/` folder)
+    and were sourced from the restaurant's public Instagram grid, @garden.goa —
+    saved as screenshot crops (not the original hi-res files) because Instagram's
+    logged-out view hits a login wall after ~18 posts and logging into the
+    user's account is off-limits. Third tile was renamed "Vegetarian Kebabs &
+    Starters" → "Kebabs & Starters" because one of its two source photos
+    couldn't be confirmed vegetarian from the image alone. User said they'll
+    upload a full photo folder later to replace/expand these — when that
+    happens, swap files in `public/images/instagram/` and update the `images`
+    arrays in `highlights`.
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -79,12 +99,41 @@ currently switched off (see below).
 
 ## Next steps
 Deployment is done (see top of file), Reserve a Table is live (see item 11 above),
-and a production click-through (Home, Menu, Reserve) came back clean. Nothing
-outstanding except the two deliberately-deferred features below — only revisit if
-the user brings them up.
+homepage highlight tiles now loop Instagram photos (item 12), hours are updated,
+and production has been re-verified after each change. Nothing outstanding except
+the two deliberately-deferred features below — only revisit if the user brings
+them up.
+
+**Waiting on the user:** they said they'll upload a full folder of their own
+photos to use in the homepage highlight tiles (see item 12) — when that arrives,
+swap it in instead of re-scraping Instagram.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+## 2026-07-29 session summary
+Three small feature changes to the homepage and Reserve page, all pushed live
+and verified in production:
+1. **Homepage highlight tiles → looping Instagram photos** (see item 12 above).
+   User initially asked for one static photo per tile matched to its category;
+   after a proposal, they instead wanted each tile to loop between different
+   Instagram posts, and later to drop the vegetarian-only framing on the third
+   tile ("don't keep a veg title... later I'll upload the file with all the
+   pictures") and to drop the title/description text under all three tiles
+   entirely, leaving photo-only cards.
+2. **Opening hours changed from 11:00 AM to 1:00 PM** (closing stays 11:00 PM).
+   Updated the single source of truth (`restaurant.hours`/`hoursShort` in
+   `restaurant-info.ts`), which propagates to the hero, footer, About, Contact,
+   and Reserve pages, plus the `Restaurant` JSON-LD `openingHoursSpecification`.
+3. **Reserve page time field restricted to business hours.** First pass added
+   `min`/`max` to the native time input (browser-enforced but only a soft
+   guarantee across browsers); user then asked more directly for the picker
+   itself to only offer 1:00 PM–11:00 PM, so it was replaced with a `<select>`
+   dropdown of fixed half-hour slots — no way to enter an out-of-range time now.
+
+All three commits pushed to `master` and confirmed live via a production
+click-through (homepage tile rotation, hero/footer hours text, Reserve page
+dropdown all checked with the browser).
 
 ## 2026-07-28 session summary
 Picked up the deployment that was paused at the end of the prior session and
