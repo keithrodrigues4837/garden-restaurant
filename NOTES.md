@@ -1,8 +1,11 @@
 # The Garden Restaurant — Build Notes
 
-Session paused here (2026-07-27, evening) — user was tired, picking up tomorrow.
-Resume by continuing the deployment walkthrough in "Next steps" below (step 1) —
-we were mid-way through connecting a git remote + Vercel when the session ended.
+**Live at https://garden-restaurant-ten.vercel.app** (deployed 2026-07-28). GitHub repo:
+https://github.com/keithrodrigues4837/garden-restaurant (SSH remote, pushes via
+`git push` work directly — an SSH key was set up on this machine and added to the
+GitHub account for this). Vercel project auto-deploys on push to `master`.
+`NEXT_PUBLIC_SITE_URL` is set as a Vercel env var to the real domain, so OG/social
+metadata resolves correctly in production (verified).
 
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
@@ -67,26 +70,13 @@ currently switched off (see below).
   ordering is paused; only relevant again if/when `orderingEnabled` goes back to
   `true`. Ask before building — don't assume email vs SMS vs "call to confirm".
 
-## Next steps (in order)
-1. **Deploy — connect a git remote + Vercel.** This is what we were doing when the
-   session paused (user was about to answer whether they already have a GitHub
-   account). Plan already agreed on:
-   - Neither `gh` (GitHub CLI) nor a logged-in `vercel` CLI session exists in this
-     environment (confirmed: `gh` isn't installed; `npx vercel --version` works
-     but isn't authenticated). Logging into GitHub and Vercel both require the
-     user's own action — can't be done on their behalf.
-   - Simplest path: user creates an empty GitHub repo via github.com (give exact
-     steps, or offer to drive their browser via Chrome automation if they're
-     already logged in and say yes) → run `git remote add origin <url>` and
-     `git push -u origin master` (Git Credential Manager will likely pop a browser
-     login the first time) → user connects that repo at vercel.com ("Add New
-     Project" → import from GitHub → Next.js auto-detected, no config needed).
-   - Once first deployed, set `NEXT_PUBLIC_SITE_URL` as a Vercel env var to the
-     real `*.vercel.app` (or custom domain) URL, then redeploy, so the OG image
-     and social-share metadata resolve to the live domain instead of localhost.
-2. Once live, do one more click-through pass on the actual production URL (not
-   just localhost) — check images, fonts, and the WhatsApp button work there too.
-3. Only revisit the AI assistant or order backend if the user brings them up.
+## Next steps
+Deployment is done (see top of file) and a production click-through (Home, Menu —
+images, WhatsApp button) came back clean. Nothing outstanding except the two
+deliberately-deferred features below — only revisit if the user brings them up.
+
+Possible future asks, not yet requested: a custom domain (currently on the free
+`*.vercel.app` subdomain), analytics.
 
 ## Environment gotcha (Windows/PowerShell)
 Each PowerShell tool call starts a fresh process — `$env:Path` changes don't persist
@@ -96,6 +86,15 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 ```
 (Note: the Bash tool in this environment does NOT need this prefix — `git`, `node`,
 and `npm` already resolve there. Only PowerShell calls need it.)
+
+## Git auth gotcha
+`git push` over HTTPS hung indefinitely in this sandboxed Bash tool — Git Credential
+Manager tries to pop a browser login window that never became visible/interactive
+here. Fixed by switching to SSH: generated `~/.ssh/id_ed25519` (no passphrase),
+added the public key to the GitHub account's SSH keys, and set the `origin` remote
+to `git@github.com:keithrodrigues4837/garden-restaurant.git`. Plain `git push` now
+works fine. If push ever hangs again, check `git remote -v` first — HTTPS URLs
+will hit the same GCM problem.
 
 ## Dev server
 Run `npm run dev` from `C:\Users\keith\garden-restaurant` (with the PATH prefix above
