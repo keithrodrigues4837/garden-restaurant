@@ -15,7 +15,7 @@ currently switched off (see below).
 
 ## Stack
 - Next.js 16 (App Router, TypeScript, Tailwind v4), scaffolded with `create-next-app`
-- Hosting target: Vercel (not yet deployed — no git remote configured yet either)
+- Hosted on Vercel, auto-deploys from GitHub `master` (see top of file)
 - No database — menu is static data in `src/lib/menu-data.ts`; cart is client-side
   React Context + localStorage (currently unused in the UI, see ordering flag below)
 
@@ -55,8 +55,15 @@ currently switched off (see below).
    non-blocking issue in `CartContext.tsx` (a `setState` call inside an effect,
    `react-hooks/set-state-in-effect`) — doesn't fail the build, and the cart UI
    is currently hidden anyway, so it's fine to leave until ordering comes back.
-10. Git initialized, committed after every change (see `git log`) — **but no
-    remote configured yet**, this repo is local-only.
+10. Git initialized, committed after every change (see `git log`), pushed to
+    GitHub, auto-deployed to Vercel on every push to `master`.
+11. **Reserve a Table** (`/reserve`, `src/components/ReservationForm.tsx`) — a
+    form (name, phone, date, time, party size, notes) that opens WhatsApp with a
+    pre-filled reservation message to the restaurant's real number on submit.
+    No backend/database involved; confirmation is manual via WhatsApp or phone.
+    Linked from the header nav, the home hero ("Reserve a Table", replacing the
+    old "Visit Us" button — location info is still one click away via the
+    "Location" nav item), and the footer. Verified end-to-end in production.
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -101,6 +108,11 @@ Run `npm run dev` from `C:\Users\keith\garden-restaurant` (with the PATH prefix 
 if using PowerShell). Site runs at http://localhost:3000. A background dev server may
 still be running from a previous session — check before starting a second one (port
 3000 conflict).
+
+## Unresolved: stray `preview.html`
+An untracked `preview.html` (~62KB, static Tailwind-CDN copy of the homepage) sits
+in the project root, not part of any commit. Origin unclear — left alone and
+un-staged rather than guessed at; ask the user before deleting or committing it.
 
 ## Ignore this
 The Next.js dev overlay may show a hydration "Console Error" mentioning a `webcrx=""`
