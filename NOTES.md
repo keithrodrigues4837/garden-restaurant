@@ -70,20 +70,20 @@ is currently switched off (see below).
     `CLOSE_TIME` constants in the component — so guests physically cannot
     choose or type a time outside business hours.
 12. **Homepage highlight tiles loop photos** — the three tiles below the hero
-    (`src/app/page.tsx` `highlights` array + new `src/components/RotatingImage.tsx`,
-    a client component) each cross-fade between two photos every 4s instead of
-    showing one static image, and no longer show a title/caption underneath
-    (removed per request — photo-only now). Images live in
-    `public/images/instagram/` (separate from the main `public/images/` folder)
-    and were sourced from the restaurant's public Instagram grid, @garden.goa —
-    saved as screenshot crops (not the original hi-res files) because Instagram's
-    logged-out view hits a login wall after ~18 posts and logging into the
-    user's account is off-limits. Third tile was renamed "Vegetarian Kebabs &
-    Starters" → "Kebabs & Starters" because one of its two source photos
-    couldn't be confirmed vegetarian from the image alone. User said they'll
-    upload a full photo folder later to replace/expand these — when that
-    happens, swap files in `public/images/instagram/` and update the `images`
-    arrays in `highlights`.
+    (`src/app/page.tsx` `highlights` array + `src/components/RotatingImage.tsx`,
+    a client component) each cross-fade through a rotating set of photos every
+    4s, photo-only (no title/caption shown underneath, though `title` is still
+    kept in the data for the `alt` text/React key).
+    **2026-07-31 update:** the tiles now use the restaurant's own professional
+    dish/kitchen photography instead of the earlier Instagram screenshots. User
+    supplied 70 source photos from `C:\Users\keith\OneDrive\Desktop\Garden
+    album\Garden Dishes`; they were resized (max 1400px, JPEG q78, ~12MB total)
+    into `public/images/dishes/dish-01.jpg`…`dish-70.jpg` and split round-robin
+    (i % 3) across the three tiles, ~23 photos each, so each tile cycles through
+    a large rotating set rather than just 2 images. The old
+    `public/images/instagram/` folder and its 6 screenshot crops were deleted.
+    If more photos arrive later, add them to `public/images/dishes/` and append
+    to the relevant `images` array in `highlights` (`src/app/page.tsx`).
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -99,17 +99,26 @@ is currently switched off (see below).
 
 ## Next steps
 Deployment is done (see top of file), Reserve a Table is live (see item 11 above),
-homepage highlight tiles now loop Instagram photos (item 12), hours are updated,
-and production has been re-verified after each change. Nothing outstanding except
-the two deliberately-deferred features below — only revisit if the user brings
-them up.
-
-**Waiting on the user:** they said they'll upload a full folder of their own
-photos to use in the homepage highlight tiles (see item 12) — when that arrives,
-swap it in instead of re-scraping Instagram.
+homepage highlight tiles now loop the restaurant's own dish photography (item 12,
+updated 2026-07-31), hours are updated, and production has been re-verified after
+each change. Nothing outstanding except the two deliberately-deferred features
+below — only revisit if the user brings them up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+## 2026-07-31 session summary
+User supplied the promised folder of real restaurant photos (see item 12
+above) and asked to replace the homepage tile photos entirely with these.
+Clarified scope first (curate a handful vs. use everything) — user chose to
+split all 70 photos evenly across the three tiles rather than hand-picking a
+small set. Resized/compressed them with `sharp` (already a transitive
+dependency via Next.js), wrote the output to `public/images/dishes/`, deleted
+the old `public/images/instagram/` folder, and updated the `highlights` array
+in `src/app/page.tsx`. Verified locally via the dev server and browser
+screenshot before pushing (user asked to look first), then pushed and
+confirmed the change live on production the same way. The stray `preview.html`
+in the project root is still there, untouched.
 
 ## 2026-07-29 session summary
 Three small feature changes to the homepage and Reserve page, all pushed live
