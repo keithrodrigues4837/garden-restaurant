@@ -50,8 +50,8 @@ export default function Home() {
     <div>
       <section className="relative overflow-hidden text-cream">
         <Image
-          src="/images/entrance-night.jpg"
-          alt="The Garden Restaurant entrance at La Ben Resort, Colva, lit up at night"
+          src="/images/entrance-day.jpg"
+          alt="The Garden Restaurant entrance at La Ben Resort, Colva"
           fill
           priority
           sizes="100vw"
