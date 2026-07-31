@@ -5,19 +5,43 @@ import { restaurant } from "@/lib/restaurant-info";
 
 const highlights = [
   {
-    title: "Sizzling Tandoori",
-    description: "Chicken, prawns, and paneer, char-roasted fresh in the clay oven.",
-    images: ["/images/instagram/ig-flaming-sizzler.png", "/images/instagram/ig-seekh-kebab-curry.png"],
+    title: "From Our Kitchen",
+    images: [
+      "/images/dishes/dish-01.jpg", "/images/dishes/dish-04.jpg", "/images/dishes/dish-07.jpg",
+      "/images/dishes/dish-10.jpg", "/images/dishes/dish-13.jpg", "/images/dishes/dish-16.jpg",
+      "/images/dishes/dish-19.jpg", "/images/dishes/dish-22.jpg", "/images/dishes/dish-25.jpg",
+      "/images/dishes/dish-28.jpg", "/images/dishes/dish-31.jpg", "/images/dishes/dish-34.jpg",
+      "/images/dishes/dish-37.jpg", "/images/dishes/dish-40.jpg", "/images/dishes/dish-43.jpg",
+      "/images/dishes/dish-46.jpg", "/images/dishes/dish-49.jpg", "/images/dishes/dish-52.jpg",
+      "/images/dishes/dish-55.jpg", "/images/dishes/dish-58.jpg", "/images/dishes/dish-61.jpg",
+      "/images/dishes/dish-64.jpg", "/images/dishes/dish-67.jpg", "/images/dishes/dish-70.jpg",
+    ],
   },
   {
-    title: "Rich, Slow-Cooked Gravies",
-    description: "Classic North Indian curries — vegetarian and non-vegetarian.",
-    images: ["/images/instagram/ig-palak-kofta-gravy.png", "/images/instagram/ig-mutton-rack-curry.png"],
+    title: "Signature Dishes",
+    images: [
+      "/images/dishes/dish-02.jpg", "/images/dishes/dish-05.jpg", "/images/dishes/dish-08.jpg",
+      "/images/dishes/dish-11.jpg", "/images/dishes/dish-14.jpg", "/images/dishes/dish-17.jpg",
+      "/images/dishes/dish-20.jpg", "/images/dishes/dish-23.jpg", "/images/dishes/dish-26.jpg",
+      "/images/dishes/dish-29.jpg", "/images/dishes/dish-32.jpg", "/images/dishes/dish-35.jpg",
+      "/images/dishes/dish-38.jpg", "/images/dishes/dish-41.jpg", "/images/dishes/dish-44.jpg",
+      "/images/dishes/dish-47.jpg", "/images/dishes/dish-50.jpg", "/images/dishes/dish-53.jpg",
+      "/images/dishes/dish-56.jpg", "/images/dishes/dish-59.jpg", "/images/dishes/dish-62.jpg",
+      "/images/dishes/dish-65.jpg", "/images/dishes/dish-68.jpg",
+    ],
   },
   {
-    title: "Kebabs & Starters",
-    description: "Crispy kebabs and starters, made fresh to order.",
-    images: ["/images/instagram/ig-bharwa-bhindi.png", "/images/instagram/ig-starter-plate.png"],
+    title: "Chef's Favorites",
+    images: [
+      "/images/dishes/dish-03.jpg", "/images/dishes/dish-06.jpg", "/images/dishes/dish-09.jpg",
+      "/images/dishes/dish-12.jpg", "/images/dishes/dish-15.jpg", "/images/dishes/dish-18.jpg",
+      "/images/dishes/dish-21.jpg", "/images/dishes/dish-24.jpg", "/images/dishes/dish-27.jpg",
+      "/images/dishes/dish-30.jpg", "/images/dishes/dish-33.jpg", "/images/dishes/dish-36.jpg",
+      "/images/dishes/dish-39.jpg", "/images/dishes/dish-42.jpg", "/images/dishes/dish-45.jpg",
+      "/images/dishes/dish-48.jpg", "/images/dishes/dish-51.jpg", "/images/dishes/dish-54.jpg",
+      "/images/dishes/dish-57.jpg", "/images/dishes/dish-60.jpg", "/images/dishes/dish-63.jpg",
+      "/images/dishes/dish-66.jpg", "/images/dishes/dish-69.jpg",
+    ],
   },
 ];
 
