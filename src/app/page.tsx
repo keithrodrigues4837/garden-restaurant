@@ -87,11 +87,15 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="grid gap-8 sm:grid-cols-3">
-          {highlights.map((h) => (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-8">
+          {highlights.map((h, i) => (
             <div
               key={h.title}
-              className="overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm"
+              className={`overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm ${
+                i === highlights.length - 1
+                  ? "col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-full"
+                  : ""
+              }`}
             >
               <div className="relative aspect-[4/3] w-full">
                 <RotatingImage images={h.images} alt={h.title} />
