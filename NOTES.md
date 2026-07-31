@@ -7,11 +7,15 @@ GitHub account for this). Vercel project auto-deploys on push to `master`.
 `NEXT_PUBLIC_SITE_URL` is set as a Vercel env var to the real domain, so OG/social
 metadata resolves correctly in production (verified).
 
-**Not yet pushed:** the homepage hero is now a looping video instead of a photo
-(committed locally as of 2026-07-31, commit "Replace homepage hero photo with a
-looping cooking video") — user chose to hold off pushing to production. Push it
-when they give the go-ahead; see the 2026-07-31 session summary below for how it
-was built.
+**Video hero built, but not in use:** after seeing it live, the user decided they
+preferred the original static photo hero and asked to revert — homepage hero is
+back to `<Image src="/images/entrance-day.jpg">` as of commit "Revert homepage
+hero to the photo, keep video assets for later" (2026-07-31). The finished video
+(`public/videos/hero-loop.mp4` + `public/images/hero-video-poster.jpg`) was
+deliberately kept in the repo, unused, in case they want to swap it back in —
+see the 2026-07-31 "video hero" session summary below for how it was built and
+how to re-enable it (swap the `<Image>` back for the `<video>` block, both still
+exist in git history at commit `b7c1ac2`).
 
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
