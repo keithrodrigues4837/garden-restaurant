@@ -8,10 +8,10 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
           <Image
-            src="/logo-cropped.png"
+            src="/logo.png"
             alt={restaurant.name}
-            width={790}
-            height={428}
+            width={1088}
+            height={485}
             unoptimized
             className="h-20 w-auto"
           />

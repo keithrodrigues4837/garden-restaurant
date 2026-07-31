@@ -23,10 +23,10 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-6">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo-cropped.png"
+            src="/logo.png"
             alt={restaurant.name}
-            width={790}
-            height={428}
+            width={1088}
+            height={485}
             priority
             unoptimized
             className="h-20 w-auto sm:h-24"
