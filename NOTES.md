@@ -120,6 +120,39 @@ screenshot before pushing (user asked to look first), then pushed and
 confirmed the change live on production the same way. The stray `preview.html`
 in the project root is still there, untouched.
 
+Later in the same session, user flagged (via a phone screenshot) that the
+tiles looked bad on mobile — each one was full-width and nearly full-screen
+tall, stacked one below the other. Fixed the grid in `src/app/page.tsx`:
+`grid-cols-2` on mobile (2 photos per row) with the third tile centered below
+at the same size (`col-span-2 mx-auto w-1/2`), `sm:grid-cols-3` unchanged for
+desktop. **Note:** the browser automation tool's `resize_window` did not
+actually change the page's viewport in this environment (confirmed via
+`window.innerWidth` staying at desktop size even after a "successful" resize
+call) — could not get a real mobile-viewport screenshot this session. Verified
+the fix instead by having the user check it live on their phone over the LAN
+dev-server address before pushing.
+
+Also swapped the site logo (`public/logo.png`, used in `Header.tsx` and
+`Footer.tsx`) for a new design the user provided from
+`OneDrive\Desktop\Garden album\Garden logo\Gardenlogo.png` — same leaf/pill
+mark as before, but now with a "Specialising in Authentic Indian Cuisine"
+tagline baked into the image underneath. The source file has that tagline in
+dark text, which was invisible against the dark green header/footer
+background — recolored just those pixels to white with a raw-buffer script
+(`sharp`, threshold on y-coordinate + alpha, no other part of the artwork
+touched) rather than cropping the tagline off, per user's explicit request.
+Old `public/logo-cropped.png` deleted; note `public/logo-transparent.png`
+(unused, pre-dates this session) is still sitting in `public/` untouched — not
+part of this change, low priority to clean up.
+
+User separately asked about the watermarks ("THE GARDEN RESTAURANT" logo
+baked into ~most of the professional dish photos, position varies — top-left/
+top-center/top-right depending on the shoot) — explained there's no true
+inpainting tool available, only a blur-patch trick that would look uneven
+across photos (seamless on blurry/bokeh backgrounds, smudged on sharp ones
+like a shrimp platter shot). **User said to leave watermarks as-is — don't
+touch them, don't re-raise unprompted.**
+
 ## 2026-07-29 session summary
 Three small feature changes to the homepage and Reserve page, all pushed live
 and verified in production:
