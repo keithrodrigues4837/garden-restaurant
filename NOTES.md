@@ -7,6 +7,12 @@ GitHub account for this). Vercel project auto-deploys on push to `master`.
 `NEXT_PUBLIC_SITE_URL` is set as a Vercel env var to the real domain, so OG/social
 metadata resolves correctly in production (verified).
 
+**Not yet pushed:** the homepage hero is now a looping video instead of a photo
+(committed locally as of 2026-07-31, commit "Replace homepage hero photo with a
+looping cooking video") — user chose to hold off pushing to production. Push it
+when they give the go-ahead; see the 2026-07-31 session summary below for how it
+was built.
+
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
 La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India. Open daily 1:00 PM–11:00 PM,
@@ -114,6 +120,66 @@ below — only revisit if the user brings them up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+## 2026-07-31 session summary (video hero)
+User wanted a video added to the site, specifically as the homepage hero
+background, and asked to edit it together rather than just dropping in a
+pre-made file. `ffmpeg` was not installed in this environment — installed via
+`winget install --id Gyan.FFmpeg`, lands at
+`C:\Users\keith\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_*\ffmpeg-*\bin\`
+(not yet on PATH mid-session without a shell restart — invoked with the full
+path throughout). Source footage: three Instagram Reels from
+`OneDrive\Desktop\Garden album\Garden Reels\` (`TGR Reel 1/3/4.mp4`, all
+1080×1920 portrait, 30fps, h264/aac), each ending in the same static "The
+Garden Restaurant" contact-card outro that needed trimming off. Workflow, one
+reel at a time per the user's request:
+1. Generated contact-sheet thumbnails (`ffmpeg -vf "fps=...,tile=..."`) to
+   find each outro's fade-in point, then trimmed each reel just before it
+   (Reel 1 → 17.2s, Reel 3 → 14.1s, Reel 4 → 9.45s) and saved previews to
+   the user's Desktop (`OneDrive\Desktop\TGR Reel N - trimmed preview.mp4`)
+   for them to actually watch before continuing — there's no way to play
+   video for the user in-chat, so local preview files + asking them to
+   double-click are the pattern for this kind of review.
+2. Merged the three trims with `xfade`/`acrossfade` (0.6s crossfades, not
+   hard cuts — an unprompted quality call the user approved) into one
+   ~39.6s clip.
+3. Made it loop-safe: crossfaded the last 0.6s back into the first 0.6s
+   (via `split`+`trim` and `xfade`/`acrossfade` on a single input) so
+   restarting doesn't hard-cut. Verified by concatenating the result with
+   itself and previewing across the seam.
+4. Built the final web asset: stripped audio (browsers only autoplay muted
+   video), scaled to 720px wide (was 1080, cut file size a lot),
+   `-movflags +faststart`. First pass was a plain portrait crop —
+   looked bad once actually placed in the hero (see below) — so it went
+   through a second pass.
+5. **Portrait-in-wide-hero problem**: the hero section is wide and short,
+   so `object-cover` on a raw 9:16 clip crops in extremely tight — checked
+   this live in the browser and it read as an unrecognisable dark-green
+   blur, not food. Fixed with a "blurred fill" composite (ffmpeg
+   `split`+`scale`+`crop`+`gblur` for a soft zoomed background layer, the
+   full un-cropped portrait clip overlaid centered on top) baked directly
+   into the video file at a 1600×667 canvas — keeps the subject fully
+   visible in the center with a soft blurred glow filling the sides,
+   rather than relying on CSS. Final file:
+   `public/videos/hero-loop.mp4` (~9MB), poster frame
+   `public/images/hero-video-poster.jpg`. `src/app/page.tsx` hero section
+   now has a `<video autoPlay muted loop playsInline>` in place of the old
+   `<Image src="/images/entrance-day.jpg">` — same `object-cover` container
+   pattern as before.
+6. Committed locally but **user chose to hold off pushing** — see the note
+   near the top of this file. `entrance-day.jpg` is still used by the About
+   page, so it wasn't deleted.
+
+Earlier in the same session, the user also asked to swap the homepage hero
+photo itself (still-image era, before the video ask) to a different real
+photo, then immediately asked to reposition it so the restaurant's sign was
+visible, then changed their mind mid-edit and asked to revert to how it was
+before any of that — reverted cleanly with `git revert` (that commit was
+never pushed, so production was never affected either way). Net effect: the
+photo hero briefly detoured through a night-time entrance photo and back to
+`entrance-day.jpg`, before the whole photo hero was replaced by the video
+above. **Don't be surprised if `entrance-night.jpg` doesn't exist** — it was
+added and then removed by that revert.
 
 ## 2026-07-31 session summary
 User supplied the promised folder of real restaurant photos (see item 12
