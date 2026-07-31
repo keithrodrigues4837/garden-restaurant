@@ -41,6 +41,14 @@ is currently switched off (see below).
    site-wide in `layout.tsx`) — links to `wa.me/918379043188` with a prefilled
    greeting, opens in a new tab. Its bottom offset already accounts for the mobile
    cart bar reappearing if ordering is ever turned back on.
+6b. **Floating Instagram follow button** (`src/components/InstagramButton.tsx`,
+   also rendered site-wide in `layout.tsx`) — same style/pattern as the WhatsApp
+   button, stacked directly above it, links to `instagram.com/garden.goa` (handle
+   in `restaurant.instagram` in `restaurant-info.ts`). This is a follow link only,
+   not a live embedded feed — user was offered both options and chose the simple
+   follow button since a live feed would need a third-party service (SnapWidget/
+   Elfsight-style) with the restaurant's Instagram account connected via that
+   service's own login, which needs the user to set up themselves.
 7. **SEO**: full Open Graph + Twitter card metadata, a `Restaurant` JSON-LD
    structured-data script (now includes `telephone` since the number is real),
    a generated 1200×630 `opengraph-image.jpg` (cropped from the entrance-sign
