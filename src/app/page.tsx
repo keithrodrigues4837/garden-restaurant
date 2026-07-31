@@ -59,7 +59,7 @@ export default function Home() {
         >
           <source src="/videos/hero-loop.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-forest/60" />
+        <div className="absolute inset-0 bg-forest/70" />
         <div className="relative mx-auto max-w-6xl px-4 py-24 text-center sm:px-6">
           <p className="font-display text-sm tracking-[0.3em] text-gold uppercase">
             {restaurant.tagline}
