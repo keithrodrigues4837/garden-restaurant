@@ -35,8 +35,7 @@ export default function About() {
           {restaurant.seating}{" "}
           guests, making it the perfect spot for intimate gatherings and
           family get-togethers. Whether you&apos;re celebrating a special occasion or simply
-          craving a comforting home-style curry, we welcome you to dine in
-          {restaurant.orderingEnabled ? " — or order ahead for pickup." : "."}
+          craving a comforting home-style curry, we welcome you to dine in.
         </p>
         <p>We&apos;re open daily, {restaurant.hoursShort}.</p>
       </div>

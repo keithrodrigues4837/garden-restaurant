@@ -7,9 +7,7 @@ export default function InstagramButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Follow ${restaurant.name} on Instagram`}
-      className={`fixed right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition hover:scale-105 sm:right-6 ${
-        restaurant.orderingEnabled ? "bottom-40 lg:bottom-24" : "bottom-24"
-      }`}
+      className="fixed right-4 bottom-24 z-40 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition hover:scale-105 sm:right-6"
       style={{
         background:
           "radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)",

@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InstagramButton from "@/components/InstagramButton";
-import { CartProvider } from "@/context/CartContext";
 import { restaurant } from "@/lib/restaurant-info";
 
 const inter = Inter({
@@ -100,13 +99,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
         />
-        <CartProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-          <InstagramButton />
-        </CartProvider>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+        <InstagramButton />
       </body>
     </html>
   );

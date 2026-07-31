@@ -4,11 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { restaurant } from "@/lib/restaurant-info";
-import { useCart } from "@/context/CartContext";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/menu", label: restaurant.orderingEnabled ? "Menu & Order" : "Menu" },
   { href: "/reserve", label: "Reserve" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Location" },
@@ -16,7 +14,6 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const { itemCount } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-forest text-cream shadow-md">
@@ -45,17 +42,15 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link
-          href="/menu"
-          className="relative hidden items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-forest-dark transition hover:bg-gold-dark md:inline-flex"
+        <a
+          href={restaurant.menuPdf}
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-forest-dark transition hover:bg-gold-dark md:inline-flex"
         >
-          {restaurant.orderingEnabled ? "Order Pickup" : "View Menu"}
-          {restaurant.orderingEnabled && itemCount > 0 && (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-forest-dark px-1 text-xs font-bold text-cream">
-              {itemCount}
-            </span>
-          )}
-        </Link>
+          View Menu
+        </a>
 
         <button
           type="button"
@@ -85,6 +80,16 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <a
+            href={restaurant.menuPdf}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="rounded px-2 py-3 text-base font-medium text-cream/90 hover:bg-forest-dark"
+          >
+            View Menu
+          </a>
         </nav>
       )}
     </header>

@@ -71,12 +71,15 @@ export default function Home() {
             {restaurant.description}
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href="/menu"
+            <a
+              href={restaurant.menuPdf}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-gold px-8 py-3 font-semibold text-forest-dark transition hover:bg-gold-dark"
             >
-              {restaurant.orderingEnabled ? "Order for Pickup" : "View Menu"}
-            </Link>
+              View Menu
+            </a>
             <Link
               href="/reserve"
               className="rounded-full border border-cream/40 px-8 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold"
@@ -124,17 +127,17 @@ export default function Home() {
             </h2>
             <p className="mt-4 max-w-2xl text-forest/80">
               With seating for {restaurant.seating} guests at La Ben Resort, Colva, we welcome
-              intimate gatherings and family celebrations alike
-              {restaurant.orderingEnabled
-                ? " — or skip the wait and order your favourites for pickup."
-                : "."}
+              intimate gatherings and family celebrations alike.
             </p>
-            <Link
-              href="/menu"
+            <a
+              href={restaurant.menuPdf}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-8 inline-block rounded-full bg-maroon px-8 py-3 font-semibold text-cream transition hover:bg-maroon/90"
             >
               View Menu
-            </Link>
+            </a>
           </div>
         </div>
       </section>

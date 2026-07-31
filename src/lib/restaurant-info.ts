@@ -15,11 +15,5 @@ export const restaurant = {
   phone: "+91 83790 43188",
   phoneIsPlaceholder: false,
   instagram: "garden.goa",
-  // Online pickup ordering is paused for now — flip to true to bring back
-  // the cart/checkout UI on the Menu page and the ordering CTAs site-wide.
-  orderingEnabled: false,
-  pickup: {
-    mode: "asap" as const,
-    note: "Pickup orders are prepared fresh — ready in about 25–35 minutes.",
-  },
+  menuPdf: "/menu.pdf",
 };
