@@ -21,36 +21,43 @@ exist in git history at commit `b7c1ac2`).
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
 La Ben Resort, Colva Beach Rd, Colva, Goa 403708, India. Open daily 1:00 PM–11:00 PM,
 seats 60 (hours changed from 11:00 AM–11:00 PM on 2026-07-29 — see that session's
-summary below). Built as a menu/info site; online pickup ordering exists in code but
-is currently switched off (see below).
+summary below). Built as a menu/info site — there is no online ordering (see item 5,
+updated 2026-07-31: the feature was fully removed, not just paused).
 
 ## Stack
 - Next.js 16 (App Router, TypeScript, Tailwind v4), scaffolded with `create-next-app`
 - Hosted on Vercel, auto-deploys from GitHub `master` (see top of file)
-- No database — menu is static data in `src/lib/menu-data.ts`; cart is client-side
-  React Context + localStorage (currently unused in the UI, see ordering flag below)
+- No database, no cart/checkout code (removed 2026-07-31 — see item 5)
 
 ## Current state — what's live in the code right now
-1. **Pages**: Home, Menu, About, Contact — all built with real content and real photos.
-2. **Real menu**: ~150 items across 20 categories, digitized from the restaurant's own
-   PDF menu (`src/lib/menu-data.ts`). Alcohol and un-priced "market rate" seafood are
-   excluded, with a `note` field telling customers to call in for those.
+1. **Pages**: Home, About, Contact, Reserve — all built with real content and real
+   photos. There is no `/menu` page (removed 2026-07-31, see item 5).
+2. **Menu is a PDF download**: `public/menu.pdf` (the restaurant's actual PDF menu,
+   supplied by the user), linked from `restaurant.menuPdf` in `restaurant-info.ts`.
+   Every "View Menu" button/link site-wide (header nav CTA, header mobile dropdown,
+   home hero, home "Perfect for Family Get-Togethers" section, footer) is a plain
+   `<a href={restaurant.menuPdf} download target="_blank">`, not a `<Link>` to a page.
 3. **Real photos**: sourced from the restaurant's own public Google Business Profile
-   listing, in `public/images/`, used across Home/About/Menu.
+   listing plus a later batch of professional photography (see item 12), in
+   `public/images/`, used across Home/About.
 4. **Real contact info**: real phone `+91 83790 43188` in `src/lib/restaurant-info.ts`
    (`phoneIsPlaceholder: false`), shown in the footer, Contact page, and JSON-LD.
-5. **Online ordering is OFF** via `restaurant.orderingEnabled = false` in
-   `restaurant-info.ts`. This is one flag, not a deletion: the Menu page shows
-   dish info only (no Add buttons/cart/checkout, full-width layout), and the
-   Header CTA, Home CTAs/copy, Footer link, and About page copy all read as plain
-   "View Menu" / menu-browsing language instead of promising ordering. All the
-   cart/checkout code (`CartContext`, `CartPanel`, `MobileCartBar`) is untouched —
-   **flip `orderingEnabled` back to `true` and everything reverts automatically**,
-   no other changes needed.
+5. **Online ordering was removed entirely on 2026-07-31**, not just paused. Previously
+   there was an `orderingEnabled` flag with a full cart/checkout system
+   (`CartContext`, `CartPanel`, `MobileCartBar`, a `/menu` page with ~150 digitized
+   dish items in `src/lib/menu-data.ts`) that had been switched off since it was
+   built. The user then asked to get rid of the Menu page entirely and just have
+   "View Menu" download a PDF instead — at that point the whole cart/ordering
+   system was fully dead code (only reachable from the now-deleted page), so it was
+   deleted rather than left dormant: `src/app/menu/`, `src/components/MenuBrowser.tsx`,
+   `CartPanel.tsx`, `MobileCartBar.tsx`, `src/context/CartContext.tsx`, and
+   `src/lib/menu-data.ts` are all gone, along with the `orderingEnabled`/`pickup`
+   fields in `restaurant-info.ts`. **If online ordering is ever wanted again, it
+   needs to be rebuilt from scratch** — there is no flag to flip back on anymore.
 6. **Floating WhatsApp button** (`src/components/WhatsAppButton.tsx`, rendered
    site-wide in `layout.tsx`) — links to `wa.me/918379043188` with a prefilled
-   greeting, opens in a new tab. Its bottom offset already accounts for the mobile
-   cart bar reappearing if ordering is ever turned back on.
+   greeting, opens in a new tab. Fixed at `bottom-6` (no longer needs to dodge a
+   mobile cart bar, since that's gone — see item 5).
 6b. **Floating Instagram follow button** (`src/components/InstagramButton.tsx`,
    also rendered site-wide in `layout.tsx`) — same style/pattern as the WhatsApp
    button, stacked directly above it, links to `instagram.com/garden.goa` (handle
@@ -64,16 +71,12 @@ is currently switched off (see below).
    a generated 1200×630 `opengraph-image.jpg` (cropped from the entrance-sign
    photo), and a working Google Maps embed on the Contact page (no API key
    needed, `output=embed` pattern — this already existed from an earlier session).
-8. **Menu page extras**: dish name/description search, a "Chef's Specials only"
-   filter (alongside "vegetarian only"), a mobile sticky cart bar (dormant while
-   ordering is off), and two bug fixes — the category-nav pills used to list
-   categories a filter had emptied out, and the pill row was causing genuine
-   horizontal page overflow on desktop (fixed with `min-w-0`).
-9. **Build verified clean**: `npm run build` compiles successfully and all 6
-   routes prerender as static content. `eslint` flags one pre-existing,
-   non-blocking issue in `CartContext.tsx` (a `setState` call inside an effect,
-   `react-hooks/set-state-in-effect`) — doesn't fail the build, and the cart UI
-   is currently hidden anyway, so it's fine to leave until ordering comes back.
+8. ~~Menu page extras~~ — n/a, the Menu page and all its features (dish search,
+   category filters, sticky cart bar) were removed 2026-07-31 along with the page
+   itself. See item 5.
+9. **Build verified clean**: `npm run build` compiles successfully; routes
+   prerender as static content (7 routes as of 2026-07-31, down from 8 after the
+   Menu page was removed).
 10. Git initialized, committed after every change (see `git log`), pushed to
     GitHub, auto-deployed to Vercel on every push to `master`.
 11. **Reserve a Table** (`/reserve`, `src/components/ReservationForm.tsx`) — a
@@ -109,21 +112,51 @@ is currently switched off (see below).
   console.anthropic.com); user has since deprioritized it twice ("we'll get back
   to this", "skip for now"). If they bring it up again: add `.env.local` with
   `ANTHROPIC_API_KEY`, `npm install @anthropic-ai/sdk`, build
-  `src/app/api/assistant/route.ts` with the full menu in the system prompt, and a
-  chat widget on the Menu page.
-- **Real order backend** (email/SMS notifying the kitchen) — moot right now since
-  ordering is paused; only relevant again if/when `orderingEnabled` goes back to
-  `true`. Ask before building — don't assume email vs SMS vs "call to confirm".
+  `src/app/api/assistant/route.ts`. **Note:** the original plan put its chat widget
+  on the Menu page, which no longer exists (removed 2026-07-31) — the menu itself
+  is now just a static PDF (`public/menu.pdf`), so the system prompt would need to
+  either read from that PDF or a re-digitized version of it, and the widget would
+  need a new home (e.g. the homepage).
+- **Online ordering** — not just paused anymore, fully removed on 2026-07-31 (see
+  item 5 above) along with the Menu page it lived on. Rebuilding it means starting
+  over: a menu page/data source, cart UI, and an order backend (email/SMS/call —
+  ask before assuming which). Don't assume any of the old cart code is salvageable
+  without checking git history first.
 
 ## Next steps
 Deployment is done (see top of file), Reserve a Table is live (see item 11 above),
-homepage highlight tiles now loop the restaurant's own dish photography (item 12,
-updated 2026-07-31), hours are updated, and production has been re-verified after
-each change. Nothing outstanding except the two deliberately-deferred features
-below — only revisit if the user brings them up.
+homepage highlight tiles now loop the restaurant's own dish photography (item 12),
+hours are updated, the Menu page has been replaced by a PDF download (item 5), and
+production has been re-verified after each change. Nothing outstanding except the
+deliberately-deferred AI assistant feature above — only revisit if the user brings
+it up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+## 2026-07-31 session summary (menu → PDF, hero tweaks)
+Two more changes in the same day as the video hero work above, after the video
+was already live in production:
+1. **Hero overlay opacity tuning** — user asked to change the dark overlay
+   over the hero video from its original 85% down to 70%, then 60%, then
+   changed their mind mid-request (interrupted a command) and asked to go
+   back to 70%. Current value: `bg-forest/70` in `src/app/page.tsx`. Each
+   change was checked live in the browser and pushed individually — don't
+   assume 70% is "final," this went back and forth quickly.
+2. **Menu page removed, replaced with a PDF download.** User asked to get rid
+   of the Menu page entirely and have every "View Menu" button just download
+   the restaurant's actual PDF menu instead. Clarified scope first (all
+   buttons vs. just the header, delete vs. unlink the page) — user chose "all
+   buttons" and "delete." User supplied `public/menu.pdf` directly (their real
+   PDF menu, 23 pages). Since ordering was already switched off and the whole
+   cart/checkout system was only reachable from the Menu page, deleted it all
+   rather than leaving it dormant — see item 5 in "Current state" above for
+   the full list of removed files. All "View Menu" links (header desktop nav,
+   header mobile dropdown, home hero, home mid-page section, footer) now point
+   to `restaurant.menuPdf` (`/menu.pdf`) via a plain `<a download target="_blank">`
+   instead of `<Link href="/menu">`. Verified locally (all 4 links resolve to
+   `/menu.pdf`, `/menu` route now correctly 404s, no console errors) before
+   pushing.
 
 ## 2026-07-31 session summary (video hero)
 User wanted a video added to the site, specifically as the homepage hero
