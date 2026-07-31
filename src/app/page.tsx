@@ -49,14 +49,16 @@ export default function Home() {
   return (
     <div>
       <section className="relative overflow-hidden text-cream">
-        <Image
-          src="/images/entrance-day.jpg"
-          alt="The Garden Restaurant entrance at La Ben Resort, Colva"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/hero-video-poster.jpg"
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src="/videos/hero-loop.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-forest/85" />
         <div className="relative mx-auto max-w-6xl px-4 py-24 text-center sm:px-6">
           <p className="font-display text-sm tracking-[0.3em] text-gold uppercase">
