@@ -7,15 +7,16 @@ GitHub account for this). Vercel project auto-deploys on push to `master`.
 `NEXT_PUBLIC_SITE_URL` is set as a Vercel env var to the real domain, so OG/social
 metadata resolves correctly in production (verified).
 
-**Video hero built, but not in use:** after seeing it live, the user decided they
-preferred the original static photo hero and asked to revert — homepage hero is
-back to `<Image src="/images/entrance-day.jpg">` as of commit "Revert homepage
-hero to the photo, keep video assets for later" (2026-07-31). The finished video
-(`public/videos/hero-loop.mp4` + `public/images/hero-video-poster.jpg`) was
-deliberately kept in the repo, unused, in case they want to swap it back in —
-see the 2026-07-31 "video hero" session summary below for how it was built and
-how to re-enable it (swap the `<Image>` back for the `<video>` block, both still
-exist in git history at commit `b7c1ac2`).
+**Homepage hero is a video, live in production** (`public/videos/hero-loop.mp4`,
+full-bleed `object-cover`, no blur pillarbox, `bg-forest/70` dark overlay on top).
+This flip-flopped a lot in one session (2026-07-31): built with a blurred-fill
+pillarbox treatment → briefly reverted to the old static photo → user then asked
+for the video back but *without* the blur → that's what's live now. If a "revert
+to photo" instinct comes up again from an old note, check the actual code first —
+`src/app/page.tsx`'s hero `<video>` vs `<Image src="/images/entrance-day.jpg">` —
+this file has gone back and forth enough that stale notes here are a real risk.
+See the 2026-07-31 "video hero" session summary below for how the video itself
+was built (merged/crossfaded/looped from 3 Reels via `ffmpeg`).
 
 ## What this is
 Next.js website for **The Garden Restaurant** — authentic North Indian restaurant at
@@ -133,6 +134,26 @@ it up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
+
+**Waiting on the user (pick up next session):**
+1. **Menu update workflow.** User wants to be able to change the menu content
+   without having to send a new PDF file and get it redeployed every time.
+   Proposed hosting the PDF on Google Drive (or Dropbox) and pointing
+   `restaurant.menuPdf` at that external link instead of `public/menu.pdf` —
+   replacing the file's *content* in Drive/Dropbox keeps the same share link,
+   so the site would auto-serve the new version with zero code changes. User
+   said "something else" (has a different idea in mind) but the conversation
+   moved on before they explained it — **ask what they had in mind**, don't
+   assume it's the Drive/Dropbox approach.
+2. **iOS vs Android layout question, unresolved.** User asked why the site
+   looks/behaves differently on iOS vs Android, specifically that tapping
+   "View Menu" downloads the PDF on Android but just opens it in-browser on
+   iOS — explained this is normal Safari behavior (iOS ignores the `download`
+   attribute for PDFs, no reliable web-only fix) and asked for a general
+   "layout difference" they mentioned. They then sent two screenshots meant to
+   show iOS vs Android side by side, but **both screenshots were literally the
+   same file** (identical timestamp/content) — flagged this to the user rather
+   than guessing, asked them to resend the correct pair. Still waiting on that.
 
 ## 2026-07-31 session summary (menu → PDF, hero tweaks)
 Two more changes in the same day as the video hero work above, after the video
