@@ -1,46 +1,55 @@
 import Image from "next/image";
 import Link from "next/link";
-import RotatingImage from "@/components/RotatingImage";
+import ThemeTiles, { type Theme } from "@/components/ThemeTiles";
 import { restaurant } from "@/lib/restaurant-info";
 
-const highlights = [
+const homepageThemes: Theme[] = [
   {
-    title: "From Our Kitchen",
+    name: "Kitchen Action & Cooking Process",
+    tagline: "Where the fire meets the flavour.",
     images: [
-      "/images/dishes/dish-01.jpg", "/images/dishes/dish-04.jpg", "/images/dishes/dish-07.jpg",
-      "/images/dishes/dish-10.jpg", "/images/dishes/dish-13.jpg", "/images/dishes/dish-16.jpg",
-      "/images/dishes/dish-19.jpg", "/images/dishes/dish-22.jpg", "/images/dishes/dish-25.jpg",
-      "/images/dishes/dish-28.jpg", "/images/dishes/dish-31.jpg", "/images/dishes/dish-34.jpg",
-      "/images/dishes/dish-37.jpg", "/images/dishes/dish-40.jpg", "/images/dishes/dish-43.jpg",
-      "/images/dishes/dish-46.jpg", "/images/dishes/dish-49.jpg", "/images/dishes/dish-52.jpg",
-      "/images/dishes/dish-55.jpg", "/images/dishes/dish-58.jpg", "/images/dishes/dish-61.jpg",
-      "/images/dishes/dish-64.jpg", "/images/dishes/dish-67.jpg", "/images/dishes/dish-70.jpg",
+      "/images/homepage-themes/kitchen-action/1.jpg",
+      "/images/homepage-themes/kitchen-action/2.jpg",
+      "/images/homepage-themes/kitchen-action/3.jpg",
+      "/images/homepage-themes/kitchen-action/4.jpg",
+      "/images/homepage-themes/kitchen-action/5.jpg",
+      "/images/homepage-themes/kitchen-action/6.jpg",
     ],
   },
   {
-    title: "Signature Dishes",
+    name: "Tandoor, Grills & Kebabs",
+    tagline: "Straight from the clay oven to your plate.",
     images: [
-      "/images/dishes/dish-02.jpg", "/images/dishes/dish-05.jpg", "/images/dishes/dish-08.jpg",
-      "/images/dishes/dish-11.jpg", "/images/dishes/dish-14.jpg", "/images/dishes/dish-17.jpg",
-      "/images/dishes/dish-20.jpg", "/images/dishes/dish-23.jpg", "/images/dishes/dish-26.jpg",
-      "/images/dishes/dish-29.jpg", "/images/dishes/dish-32.jpg", "/images/dishes/dish-35.jpg",
-      "/images/dishes/dish-38.jpg", "/images/dishes/dish-41.jpg", "/images/dishes/dish-44.jpg",
-      "/images/dishes/dish-47.jpg", "/images/dishes/dish-50.jpg", "/images/dishes/dish-53.jpg",
-      "/images/dishes/dish-56.jpg", "/images/dishes/dish-59.jpg", "/images/dishes/dish-62.jpg",
-      "/images/dishes/dish-65.jpg", "/images/dishes/dish-68.jpg",
+      "/images/homepage-themes/tandoor-grills/1.jpg",
+      "/images/homepage-themes/tandoor-grills/2.jpg",
+      "/images/homepage-themes/tandoor-grills/3.jpg",
+      "/images/homepage-themes/tandoor-grills/4.jpg",
+      "/images/homepage-themes/tandoor-grills/5.jpg",
+      "/images/homepage-themes/tandoor-grills/6.jpg",
     ],
   },
   {
-    title: "Chef's Favorites",
+    name: "Non-Veg Curries, Gravies & Soups",
+    tagline: "Slow-cooked, spice-rich, soul food.",
     images: [
-      "/images/dishes/dish-03.jpg", "/images/dishes/dish-06.jpg", "/images/dishes/dish-09.jpg",
-      "/images/dishes/dish-12.jpg", "/images/dishes/dish-15.jpg", "/images/dishes/dish-18.jpg",
-      "/images/dishes/dish-21.jpg", "/images/dishes/dish-24.jpg", "/images/dishes/dish-27.jpg",
-      "/images/dishes/dish-30.jpg", "/images/dishes/dish-33.jpg", "/images/dishes/dish-36.jpg",
-      "/images/dishes/dish-39.jpg", "/images/dishes/dish-42.jpg", "/images/dishes/dish-45.jpg",
-      "/images/dishes/dish-48.jpg", "/images/dishes/dish-51.jpg", "/images/dishes/dish-54.jpg",
-      "/images/dishes/dish-57.jpg", "/images/dishes/dish-60.jpg", "/images/dishes/dish-63.jpg",
-      "/images/dishes/dish-66.jpg", "/images/dishes/dish-69.jpg",
+      "/images/homepage-themes/curries-gravies/1.jpg",
+      "/images/homepage-themes/curries-gravies/2.jpg",
+      "/images/homepage-themes/curries-gravies/3.jpg",
+      "/images/homepage-themes/curries-gravies/4.jpg",
+      "/images/homepage-themes/curries-gravies/5.jpg",
+      "/images/homepage-themes/curries-gravies/6.jpg",
+    ],
+  },
+  {
+    name: "Starters & Snacks",
+    tagline: "Small plates, big flavour.",
+    images: [
+      "/images/homepage-themes/starters-snacks/1.jpg",
+      "/images/homepage-themes/starters-snacks/2.jpg",
+      "/images/homepage-themes/starters-snacks/3.jpg",
+      "/images/homepage-themes/starters-snacks/4.jpg",
+      "/images/homepage-themes/starters-snacks/5.jpg",
+      "/images/homepage-themes/starters-snacks/6.jpg",
     ],
   },
 ];
@@ -92,22 +101,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-8">
-          {highlights.map((h, i) => (
-            <div
-              key={h.title}
-              className={`overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm ${
-                i === highlights.length - 1
-                  ? "col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-full"
-                  : ""
-              }`}
-            >
-              <div className="relative aspect-[4/3] w-full">
-                <RotatingImage images={h.images} alt={h.title} />
-              </div>
-            </div>
-          ))}
-        </div>
+        <ThemeTiles themes={homepageThemes} />
       </section>
 
       <section className="bg-maroon-light/70">
