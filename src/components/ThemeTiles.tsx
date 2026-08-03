@@ -9,8 +9,7 @@ export type Theme = {
   images: string[]; // exactly 6, split 2 per tile
 };
 
-const SUB_INTERVAL_MS = 4000; // swap each tile's own image
-const THEME_INTERVAL_MS = 8000; // advance to the next theme (2 sub-steps)
+const SUB_INTERVAL_MS = 4000; // swap each tile's own image; every 2nd tick advances the theme instead
 
 export default function ThemeTiles({ themes }: { themes: Theme[] }) {
   const [themeIndex, setThemeIndex] = useState(0);

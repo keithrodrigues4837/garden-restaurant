@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { restaurant } from "@/lib/restaurant-info";
+import MenuOptionsButton from "./MenuOptionsButton";
 
 const links = [
   { href: "/", label: "Home" },
@@ -42,15 +43,12 @@ export default function Header() {
           ))}
         </nav>
 
-        <a
-          href={restaurant.menuPdf}
-          download
-          target="_blank"
-          rel="noopener noreferrer"
+        <MenuOptionsButton
+          align="right"
           className="hidden items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-semibold text-forest-dark transition hover:bg-gold-dark md:inline-flex"
         >
           View Menu
-        </a>
+        </MenuOptionsButton>
 
         <button
           type="button"
@@ -80,16 +78,13 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <a
-            href={restaurant.menuPdf}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="rounded px-2 py-3 text-base font-medium text-cream/90 hover:bg-forest-dark"
+          <MenuOptionsButton
+            align="left"
+            onOptionSelect={() => setOpen(false)}
+            className="w-full rounded px-2 py-3 text-left text-base font-medium text-cream/90 hover:bg-forest-dark"
           >
             View Menu
-          </a>
+          </MenuOptionsButton>
         </nav>
       )}
     </header>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ThemeTiles, { type Theme } from "@/components/ThemeTiles";
+import MenuOptionsButton from "@/components/MenuOptionsButton";
 import { restaurant } from "@/lib/restaurant-info";
 
 const homepageThemes: Theme[] = [
@@ -80,15 +81,12 @@ export default function Home() {
             {restaurant.description}
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <a
-              href={restaurant.menuPdf}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
+            <MenuOptionsButton
+              align="center"
               className="rounded-full bg-gold px-8 py-3 font-semibold text-forest-dark transition hover:bg-gold-dark"
             >
               View Menu
-            </a>
+            </MenuOptionsButton>
             <Link
               href="/reserve"
               className="rounded-full border border-cream/40 px-8 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold"
@@ -123,15 +121,12 @@ export default function Home() {
               With seating for {restaurant.seating} guests at La Ben Resort, Colva, we welcome
               intimate gatherings and family celebrations alike.
             </p>
-            <a
-              href={restaurant.menuPdf}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
+            <MenuOptionsButton
+              align="left"
               className="mt-8 inline-block rounded-full bg-maroon px-8 py-3 font-semibold text-cream transition hover:bg-maroon/90"
             >
               View Menu
-            </a>
+            </MenuOptionsButton>
           </div>
         </div>
       </section>

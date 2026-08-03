@@ -15,5 +15,6 @@ export const restaurant = {
   phone: "+91 83790 43188",
   phoneIsPlaceholder: false,
   instagram: "garden.goa",
-  menuPdf: "/menu.pdf",
+  menuPdf: "/the-garden-restaurant-menu.pdf",
+  menuPdfDownloadName: "The Garden Restaurant Menu.pdf",
 };

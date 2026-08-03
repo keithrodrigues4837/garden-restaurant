@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { restaurant } from "@/lib/restaurant-info";
+import MenuOptionsButton from "./MenuOptionsButton";
 
 export default function Footer() {
   return (
@@ -29,15 +30,12 @@ export default function Footer() {
           <h3 className="mb-2 font-semibold text-cream">Location</h3>
           <p>{restaurant.address.line1}</p>
           <p>{restaurant.address.line2}</p>
-          <a
-            href={restaurant.menuPdf}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
+          <MenuOptionsButton
+            align="left"
             className="mt-4 block font-semibold text-gold hover:text-gold-dark"
           >
             View Menu &rarr;
-          </a>
+          </MenuOptionsButton>
           <Link href="/reserve" className="mt-2 block font-semibold text-gold hover:text-gold-dark">
             Reserve a Table &rarr;
           </Link>
