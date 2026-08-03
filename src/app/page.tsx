@@ -5,8 +5,8 @@ import { restaurant } from "@/lib/restaurant-info";
 
 const homepageThemes: Theme[] = [
   {
-    name: "Kitchen Action & Cooking Process",
-    tagline: "Where the fire meets the flavour.",
+    name: "Behind the Sizzle",
+    tagline: "This is where the magic actually happens.",
     images: [
       "/images/homepage-themes/kitchen-action/1.jpg",
       "/images/homepage-themes/kitchen-action/2.jpg",
@@ -17,8 +17,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Tandoor, Grills & Kebabs",
-    tagline: "Straight from the clay oven to your plate.",
+    name: "The Tandoor Tales",
+    tagline: "Clay-fired classics, centuries in the making.",
     images: [
       "/images/homepage-themes/tandoor-grills/1.jpg",
       "/images/homepage-themes/tandoor-grills/2.jpg",
@@ -29,8 +29,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Non-Veg Curries, Gravies & Soups",
-    tagline: "Slow-cooked, spice-rich, soul food.",
+    name: "Simmered in Tradition",
+    tagline: "Generations of spice, one slow-cooked bowl.",
     images: [
       "/images/homepage-themes/curries-gravies/1.jpg",
       "/images/homepage-themes/curries-gravies/2.jpg",
@@ -41,8 +41,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Starters & Snacks",
-    tagline: "Small plates, big flavour.",
+    name: "The Warm-Up",
+    tagline: "Small bites to get the feast started.",
     images: [
       "/images/homepage-themes/starters-snacks/1.jpg",
       "/images/homepage-themes/starters-snacks/2.jpg",
