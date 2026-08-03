@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InstagramButton from "@/components/InstagramButton";
+import MapsButton from "@/components/MapsButton";
 import { restaurant } from "@/lib/restaurant-info";
 
 const inter = Inter({
@@ -104,6 +105,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppButton />
         <InstagramButton />
+        <MapsButton />
       </body>
     </html>
   );

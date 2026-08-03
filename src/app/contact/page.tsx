@@ -19,8 +19,15 @@ export default function Contact() {
         <div className="space-y-6">
           <div>
             <h2 className="font-display text-lg font-semibold text-forest">Address</h2>
-            <p className="mt-1 text-forest/80">{restaurant.address.line1}</p>
-            <p className="text-forest/80">{restaurant.address.line2}</p>
+            <a
+              href={restaurant.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block transition hover:text-gold-dark"
+            >
+              <p className="mt-1 text-forest/80">{restaurant.address.line1}</p>
+              <p className="text-forest/80">{restaurant.address.line2}</p>
+            </a>
           </div>
 
           <div>

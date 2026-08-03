@@ -28,8 +28,15 @@ export default function Footer() {
 
         <div className="text-sm">
           <h3 className="mb-2 font-semibold text-cream">Location</h3>
-          <p>{restaurant.address.line1}</p>
-          <p>{restaurant.address.line2}</p>
+          <a
+            href={restaurant.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block transition hover:text-gold"
+          >
+            <p>{restaurant.address.line1}</p>
+            <p>{restaurant.address.line2}</p>
+          </a>
           <MenuOptionsButton
             align="left"
             className="mt-4 block font-semibold text-gold hover:text-gold-dark"
