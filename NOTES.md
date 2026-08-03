@@ -7,6 +7,11 @@ GitHub account for this). Vercel project auto-deploys on push to `master`.
 `NEXT_PUBLIC_SITE_URL` is set as a Vercel env var to the real domain, so OG/social
 metadata resolves correctly in production (verified).
 
+**Homepage highlight tiles are now a 4-theme cycling showcase** (`src/components/ThemeTiles.tsx`,
+replaced the old flat `RotatingImage` 70-photo carousel on 2026-08-03). See item 12 below and
+the 2026-08-03 session summary for full detail — if you see stale references to
+`RotatingImage.tsx` or `public/images/dishes/`, check current code first, this changed.
+
 **Homepage hero is a video, live in production** (`public/videos/hero-loop.mp4`,
 full-bleed `object-cover`, no blur pillarbox, `bg-forest/70` dark overlay on top).
 This flip-flopped a lot in one session (2026-07-31): built with a blurred-fill
@@ -33,11 +38,20 @@ updated 2026-07-31: the feature was fully removed, not just paused).
 ## Current state — what's live in the code right now
 1. **Pages**: Home, About, Contact, Reserve — all built with real content and real
    photos. There is no `/menu` page (removed 2026-07-31, see item 5).
-2. **Menu is a PDF download**: `public/menu.pdf` (the restaurant's actual PDF menu,
-   supplied by the user), linked from `restaurant.menuPdf` in `restaurant-info.ts`.
-   Every "View Menu" button/link site-wide (header nav CTA, header mobile dropdown,
-   home hero, home "Perfect for Family Get-Togethers" section, footer) is a plain
-   `<a href={restaurant.menuPdf} download target="_blank">`, not a `<Link>` to a page.
+2. **Menu is a PDF, with a view/download choice** (changed 2026-08-03): the file is
+   `public/the-garden-restaurant-menu.pdf` (renamed from `menu.pdf`), referenced via
+   `restaurant.menuPdf` in `restaurant-info.ts`. Every "View Menu" spot site-wide
+   (header nav CTA, header mobile dropdown, home hero, home "Perfect for Family
+   Get-Togethers" section, footer) is now a `<MenuOptionsButton>`
+   (`src/components/MenuOptionsButton.tsx`) — a button that opens a small dropdown
+   with "View in Browser" (plain link, opens in a new tab) and "Download PDF"
+   (`download={restaurant.menuPdfDownloadName}`, always saves as
+   "The Garden Restaurant Menu.pdf" regardless of the URL). No more raw
+   `<a download target="_blank">` tags for the menu anywhere in the codebase.
+   **Known issue, not fixed:** the PDF's own document-title metadata reads
+   "Garden Menu + Bot instructions" (visible in the browser tab when viewed) —
+   flagged to the user, they'd need to fix it in whatever tool exported the PDF;
+   nothing embedded in the actual menu pages, just stray metadata.
 3. **Real photos**: sourced from the restaurant's own public Google Business Profile
    listing plus a later batch of professional photography (see item 12), in
    `public/images/`, used across Home/About.
@@ -67,6 +81,13 @@ updated 2026-07-31: the feature was fully removed, not just paused).
    follow button since a live feed would need a third-party service (SnapWidget/
    Elfsight-style) with the restaurant's Instagram account connected via that
    service's own login, which needs the user to set up themselves.
+6c. **Floating Google Maps button** (`src/components/MapsButton.tsx`, added
+   2026-08-03) — same style/pattern as WhatsApp/Instagram, stacked *above* the
+   Instagram button (`bottom-[10.5rem]`), red pin icon on white, links to
+   `restaurant.mapsUrl` (a `google.com/maps/search/?api=1&query=...` URL built
+   from `restaurant.address.mapsQuery` in `restaurant-info.ts`). The address text
+   itself (in the footer and on the Contact page) is now also wrapped in an `<a>`
+   to that same `restaurant.mapsUrl` — both verified working in production.
 7. **SEO**: full Open Graph + Twitter card metadata, a `Restaurant` JSON-LD
    structured-data script (now includes `telephone` since the number is real),
    a generated 1200×630 `opengraph-image.jpg` (cropped from the entrance-sign
@@ -91,21 +112,44 @@ updated 2026-07-31: the feature was fully removed, not just paused).
     only half-hour slots from 1:00 PM to 11:00 PM, generated from `OPEN_TIME`/
     `CLOSE_TIME` constants in the component — so guests physically cannot
     choose or type a time outside business hours.
-12. **Homepage highlight tiles loop photos** — the three tiles below the hero
-    (`src/app/page.tsx` `highlights` array + `src/components/RotatingImage.tsx`,
-    a client component) each cross-fade through a rotating set of photos every
-    4s, photo-only (no title/caption shown underneath, though `title` is still
-    kept in the data for the `alt` text/React key).
-    **2026-07-31 update:** the tiles now use the restaurant's own professional
-    dish/kitchen photography instead of the earlier Instagram screenshots. User
-    supplied 70 source photos from `C:\Users\keith\OneDrive\Desktop\Garden
-    album\Garden Dishes`; they were resized (max 1400px, JPEG q78, ~12MB total)
-    into `public/images/dishes/dish-01.jpg`…`dish-70.jpg` and split round-robin
-    (i % 3) across the three tiles, ~23 photos each, so each tile cycles through
-    a large rotating set rather than just 2 images. The old
-    `public/images/instagram/` folder and its 6 screenshot crops were deleted.
-    If more photos arrive later, add them to `public/images/dishes/` and append
-    to the relevant `images` array in `highlights` (`src/app/page.tsx`).
+12. **Homepage highlight tiles → 4-theme cycling showcase** (rebuilt 2026-08-03,
+    fully replaces the old flat 70-photo `RotatingImage` carousel described in
+    prior sessions — that component and `public/images/dishes/` are no longer
+    used by the homepage, though the dish images are still on disk unused).
+    The 3 tiles now cycle **as a group** through 4 curated themes, not
+    independently: `src/components/ThemeTiles.tsx` (client component) holds
+    `themeIndex`/`subIndex` state; every 4s the currently-visible sub-image
+    within each tile swaps, and every 8s (every 2nd tick) the whole group
+    advances to the next theme along with its name + tagline shown below the
+    grid. Each theme has exactly 6 photos, split 2 per tile. Theme data lives
+    in `src/app/page.tsx`'s `homepageThemes` array:
+    1. **Behind the Sizzle** — "This is where the magic actually happens."
+       (`public/images/homepage-themes/kitchen-action/`)
+    2. **The Tandoor Tales** — "Clay-fired classics, centuries in the making."
+       (`.../tandoor-grills/`)
+    3. **Simmered in Tradition** — "Generations of spice, one slow-cooked bowl."
+       (`.../curries-gravies/`)
+    4. **The Warm-Up** — "Small bites to get the feast started."
+       (`.../starters-snacks/`)
+    Names/taglines were picked with the user from several drafted directions
+    (see the 2026-08-03 session summary) — if asked to make them "more
+    creative" again, propose fresh options rather than reusing these.
+    **Important implementation detail, don't regress this:** all 24 images
+    (4 themes × 6) are mounted simultaneously with `loading="eager"` and
+    cross-faded via opacity — do NOT go back to only rendering the current
+    theme's 6 images and swapping `src`/keys on theme change. That was the
+    original approach and it caused a real bug in production: each theme
+    switch unmounted/remounted fresh `<Image>` elements, so the browser had to
+    fetch that theme's photos from scratch on every switch, showing blank
+    tiles for ~1-2s each time (worse on slower networks). Confirmed fixed by
+    preloading everything up front; verified via `naturalWidth`/`complete` JS
+    checks in the browser, not just visually, since blank-tile bugs here are
+    easy to misdiagnose as "still loading."
+    Source photos came from sorting three Google Drive links the user shared
+    (see the 2026-08-03 session summary for the full sort) — the curated
+    "best 6 per theme" picks are also saved at
+    `C:\Users\keith\Desktop\themes\` (10 theme folders, 226 total sorted
+    photos) if more homepage/marketing use is wanted later.
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -126,11 +170,12 @@ updated 2026-07-31: the feature was fully removed, not just paused).
 
 ## Next steps
 Deployment is done (see top of file), Reserve a Table is live (see item 11 above),
-homepage highlight tiles now loop the restaurant's own dish photography (item 12),
-hours are updated, the Menu page has been replaced by a PDF download (item 5), and
-production has been re-verified after each change. Nothing outstanding except the
-deliberately-deferred AI assistant feature above — only revisit if the user brings
-it up.
+homepage highlight tiles now cycle through 4 curated themes (item 12), hours are
+updated, the Menu page has been replaced by a PDF with a view/download choice
+(item 5), address text and a new floating button link to Google Maps (item 6c),
+and production has been re-verified after each change. Nothing outstanding except
+the deliberately-deferred AI assistant feature above — only revisit if the user
+brings it up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain), analytics.
@@ -154,6 +199,45 @@ Possible future asks, not yet requested: a custom domain (currently on the free
    show iOS vs Android side by side, but **both screenshots were literally the
    same file** (identical timestamp/content) — flagged this to the user rather
    than guessing, asked them to resend the correct pair. Still waiting on that.
+
+## 2026-08-03 session summary (Drive photo sort, homepage theme tiles, menu dropdown, Maps)
+Long session, four distinct pieces of work:
+
+1. **Sorted three Google Drive folders into 10 themed photo folders.** User shared
+   three Drive links (not part of this git repo) and asked for the photos sorted
+   into 10 themes, excluding "LaBen Hotel and the rooftop." The three links turned
+   out to be a **mixed bag**, not clean restaurant-only folders: hotel room
+   photography (AC/Deluxe/Non-AC room categories, bathrooms), local sightseeing
+   (a church, Colva Beach), and an entire separate "Rooftop" sports-bar venue's
+   menu shoot (pizza/burgers/cocktails under a distinct "Rooftop — home of
+   International Sporting Events" logo) — all interleaved *within the same
+   folders* as legitimate TGR restaurant photography, sometimes in the same
+   folder file-by-file. Handled this by downloading each folder as a zip,
+   building image "contact sheets" and "badge-strip" sheets (small node/sharp
+   scripts, tiled thumbnails with index labels) to visually review every photo's
+   watermark/content rather than trusting folder names, then classifying and
+   copying with a dedup pass (MD5 hash) since ~40 photos were exact duplicates
+   shared across two of the three links. Result: 226 unique kept photos (138
+   excluded as hotel/rooftop) sorted into
+   `C:\Users\keith\Desktop\themes\01_...` through `10_...`. **If asked to redo
+   or extend this sort, don't assume a Drive folder's name/label reflects its
+   actual contents** — this dataset specifically punished that assumption.
+2. **Built the 4-theme homepage tile showcase** — see item 12 in "Current state"
+   above for the full technical detail, including a real bug (blank tiles from
+   lazy-loading) that was caught and fixed before going live. User picked 4 of
+   the 10 sorted themes, then asked for the 6 best shots + a tagline per theme;
+   names/taglines went through a couple of rounds (direction options, then
+   mix-and-match, then a re-roll of one) before landing on the current set.
+3. **Menu PDF: view/download choice + rename** — see item 2 above.
+4. **Google Maps: address links + new floating button** — see item 6c above.
+
+All four pushed to production and re-verified live via the browser (not just
+`npm run build`) after each change, per this project's usual practice.
+
+**Still open, unaddressed this session** (see "Waiting on the user" above,
+unchanged since 2026-07-31): the menu-update-workflow question (user said
+"something else" but never explained what) and the iOS/Android screenshot
+mix-up. Don't re-raise unprompted — wait for the user.
 
 ## 2026-07-31 session summary (menu → PDF, hero tweaks)
 Two more changes in the same day as the video hero work above, after the video
@@ -351,7 +435,11 @@ will hit the same GCM problem.
 Run `npm run dev` from `C:\Users\keith\garden-restaurant` (with the PATH prefix above
 if using PowerShell). Site runs at http://localhost:3000. A background dev server may
 still be running from a previous session — check before starting a second one (port
-3000 conflict).
+3000 conflict). **Gotcha (hit repeatedly on 2026-08-03):** when port 3000 is taken,
+Next.js silently falls back to 3001, 3002, etc. — always read the actual "Local:"
+line from the dev server's own log output before navigating the browser there,
+rather than assuming 3000. Browsing a stale server on the wrong port looks
+identical to the new code not working (old markup/behavior, confusing to debug).
 
 ## Unresolved: stray `preview.html`
 An untracked `preview.html` (~62KB, static Tailwind-CDN copy of the homepage) sits
