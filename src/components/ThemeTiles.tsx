@@ -35,35 +35,41 @@ export default function ThemeTiles({ themes }: { themes: Theme[] }) {
   return (
     <div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-8">
-        {[0, 1, 2].map((tileIdx) => {
-          const tileImages = [theme.images[tileIdx * 2], theme.images[tileIdx * 2 + 1]];
-          return (
-            <div
-              key={tileIdx}
-              className={`overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm ${
-                tileIdx === 2
-                  ? "col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-full"
-                  : ""
-              }`}
-            >
-              <div className="relative aspect-[4/3] w-full">
-                {tileImages.map((src, i) => (
-                  <Image
-                    key={src}
-                    src={src}
-                    alt={theme.name}
-                    fill
-                    sizes="(min-width: 640px) 33vw, 100vw"
-                    className={`object-cover transition-opacity duration-1000 ${
-                      i === subIndex ? "opacity-100" : "opacity-0"
-                    }`}
-                    priority={themeIndex === 0 && tileIdx === 0 && i === 0}
-                  />
-                ))}
-              </div>
+        {[0, 1, 2].map((tileIdx) => (
+          <div
+            key={tileIdx}
+            className={`overflow-hidden rounded-2xl bg-sage-light/60 shadow-sm ${
+              tileIdx === 2
+                ? "col-span-2 mx-auto w-1/2 sm:col-span-1 sm:mx-0 sm:w-full"
+                : ""
+            }`}
+          >
+            <div className="relative aspect-[4/3] w-full">
+              {/* All 24 images are mounted (and eagerly loaded) up front so
+                  theme/sub-image switches are instant crossfades, not
+                  fresh network fetches. */}
+              {themes.map((t, tIdx) =>
+                [0, 1].map((subIdx) => {
+                  const src = t.images[tileIdx * 2 + subIdx];
+                  const isVisible = tIdx === themeIndex && subIdx === subIndex;
+                  return (
+                    <Image
+                      key={src}
+                      src={src}
+                      alt={t.name}
+                      fill
+                      sizes="(min-width: 640px) 33vw, 100vw"
+                      loading="eager"
+                      className={`object-cover transition-opacity duration-1000 ${
+                        isVisible ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  );
+                })
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
       <div className="mt-6 text-center">
         <p
