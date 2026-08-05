@@ -14,7 +14,7 @@ export const restaurant = {
   hours: "Open daily, 1:00 PM – 11:00 PM",
   hoursShort: "1:00 PM – 11:00 PM, daily",
   address,
-  mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.mapsQuery)}`,
+  mapsUrl: "https://maps.app.goo.gl/jXAged3c1GWSGec87",
   phone: "+91 83790 43188",
   phoneIsPlaceholder: false,
   instagram: "garden.goa",
