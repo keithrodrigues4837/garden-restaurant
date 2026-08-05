@@ -84,10 +84,17 @@ updated 2026-07-31: the feature was fully removed, not just paused).
 6c. **Floating Google Maps button** (`src/components/MapsButton.tsx`, added
    2026-08-03) — same style/pattern as WhatsApp/Instagram, stacked *above* the
    Instagram button (`bottom-[10.5rem]`), red pin icon on white, links to
-   `restaurant.mapsUrl` (a `google.com/maps/search/?api=1&query=...` URL built
-   from `restaurant.address.mapsQuery` in `restaurant-info.ts`). The address text
-   itself (in the footer and on the Contact page) is now also wrapped in an `<a>`
-   to that same `restaurant.mapsUrl` — both verified working in production.
+   `restaurant.mapsUrl` in `restaurant-info.ts`. The address text itself (in
+   the footer and on the Contact page) is also wrapped in an `<a>` to that same
+   `restaurant.mapsUrl` — all three spots share one constant. **2026-08-05:**
+   `mapsUrl` was changed from a computed `google.com/maps/search/?api=1&query=...`
+   string to a fixed short link the user provided directly
+   (`https://maps.app.goo.gl/jXAged3c1GWSGec87`) — if the restaurant's Maps
+   listing ever changes, this needs a new link from the user, it's no longer
+   derived from `address.mapsQuery`. The Contact page's embedded map iframe is
+   separate (`mapSrc` in `contact/page.tsx`, still built from `mapsQuery`) and
+   was intentionally left alone — the user's ask was about click-through links,
+   not the embed.
 7. **SEO**: full Open Graph + Twitter card metadata, a `Restaurant` JSON-LD
    structured-data script (now includes `telephone` since the number is real),
    a generated 1200×630 `opengraph-image.jpg` (cropped from the entrance-sign
@@ -122,18 +129,21 @@ updated 2026-07-31: the feature was fully removed, not just paused).
     within each tile swaps, and every 8s (every 2nd tick) the whole group
     advances to the next theme along with its name + tagline shown below the
     grid. Each theme has exactly 6 photos, split 2 per tile. Theme data lives
-    in `src/app/page.tsx`'s `homepageThemes` array:
-    1. **Behind the Sizzle** — "This is where the magic actually happens."
-       (`public/images/homepage-themes/kitchen-action/`)
-    2. **The Tandoor Tales** — "Clay-fired classics, centuries in the making."
+    in `src/app/page.tsx`'s `homepageThemes` array (names/taglines updated
+    2026-08-05, photos updated 2026-08-05 — see that session summary; treat
+    both as current, prior session summaries below reference older versions):
+    1. **Flame. Focus. Flavour.** — "Every dish earns its place before it
+       earns its plate." (`public/images/homepage-themes/kitchen-action/`)
+    2. **Fired, Not Faked.** — "Real char. Real smoke. Real tandoor."
        (`.../tandoor-grills/`)
-    3. **Simmered in Tradition** — "Generations of spice, one slow-cooked bowl."
-       (`.../curries-gravies/`)
-    4. **The Warm-Up** — "Small bites to get the feast started."
+    3. **Depth Takes Time.** — "Nothing here is rushed. Nothing here is
+       ordinary." (`.../curries-gravies/`)
+    4. **Small Plates. Big Intent.** — "The first bite decides everything."
        (`.../starters-snacks/`)
-    Names/taglines were picked with the user from several drafted directions
-    (see the 2026-08-03 session summary) — if asked to make them "more
-    creative" again, propose fresh options rather than reusing these.
+    Names/taglines are user-provided copy (2026-08-05) or picked from drafted
+    directions (2026-08-03) — **this has already changed twice in two days,
+    check `src/app/page.tsx` directly rather than trusting any note here**,
+    including this one, before telling the user what's currently live.
     **Important implementation detail, don't regress this:** all 24 images
     (4 themes × 6) are mounted simultaneously with `loading="eager"` and
     cross-faded via opacity — do NOT go back to only rendering the current
@@ -199,6 +209,52 @@ Possible future asks, not yet requested: a custom domain (currently on the free
    show iOS vs Android side by side, but **both screenshots were literally the
    same file** (identical timestamp/content) — flagged this to the user rather
    than guessing, asked them to resend the correct pair. Still waiting on that.
+
+## 2026-08-05 session summary (new taglines, fixed Maps link, new theme photos)
+Short session, three quick follow-ups on the 2026-08-03 work:
+
+1. **New tagline copy for all 4 homepage themes** — user supplied finished
+   name+tagline copy directly (not a request to draft options this time); a
+   straightforward 1:1 swap in `homepageThemes` (`src/app/page.tsx`). See item
+   12 above for the current live set.
+2. **Maps links switched to a fixed short link** — user provided
+   `https://maps.app.goo.gl/jXAged3c1GWSGec87` and asked for it used
+   everywhere "which takes them to maps." Since all 3 click-through spots
+   (footer address, Contact page address, floating Maps button) already read
+   from the single `restaurant.mapsUrl` constant (built 2026-08-03), this was
+   a one-line change. See item 6c above.
+3. **Homepage theme photos replaced again** — user said they'd supply new
+   pictures and asked how; given instructions to create one folder with 4
+   subfolders (one per theme, 6 photos each). User's actual reply was just
+   "Website Image Proposals," pointing at a folder already sitting in
+   `OneDrive\Desktop\Website Image Proposals\Website Image Proposals\` —
+   **not newly taken photos**, but a proposal package (an `index.html`
+   mockup + an `images/` folder) that reused the *exact* 10-theme structure
+   from the 2026-08-03 Drive sort (`01_kitchen-action` … `10_ambience-decor`),
+   apparently prepared by/for someone called "Lionel" for review, with
+   suggested new names/taglines and status notes per theme (e.g. "replaces
+   placeholder," "new section — no bread shots available yet"). Only 01–04
+   map to the site's current 4 live tile themes; 05–10 (rice/biryani,
+   pizza/burgers, drinks, coffee, veg curries, ambience) don't correspond to
+   anything built yet. **Scoped this down to just what was asked** — swapped
+   the 6 photos per theme for the 4 live themes only (`public/images/homepage-
+   themes/<slug>/1.jpg`…`6.jpg`, overwritten in place, same resize pipeline as
+   before), left the taglines from step 1 alone (didn't adopt the proposal
+   HTML's suggested captions since that wasn't requested), and didn't touch
+   folders 05–10. **If the user wants to expand beyond 4 tiles/themes later,
+   folders 05–10 in that proposal package are sitting there ready** — flag
+   this rather than silently expanding scope next time it comes up.
+   Verification gotcha hit this session: after overwriting the on-disk JPEGs,
+   the dev-server browser tab that had been open all session showed a mix of
+   old and new photos under the same theme — **that was stale browser image
+   cache, not a real bug** (confirmed by opening the raw static file URL
+   directly in a fresh tab and checking its reported dimensions matched the
+   new source files). Don't mistake this for the 2026-08-03 blank-tile bug
+   recurring; if photos look mismatched right after a same-filename swap,
+   check a fresh tab/incognito or the raw file URL before assuming the code
+   regressed.
+
+All three changes pushed and re-verified live in production.
 
 ## 2026-08-03 session summary (Drive photo sort, homepage theme tiles, menu dropdown, Maps)
 Long session, four distinct pieces of work:
