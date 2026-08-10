@@ -81,7 +81,22 @@ const restaurantSchema = {
   // placeholder — a fake number should never reach search engine structured data.
   ...(restaurant.phoneIsPlaceholder ? {} : { telephone: restaurant.phone }),
   url: siteUrl,
-  image: `${siteUrl}/opengraph-image.jpg`,
+  image: [
+    `${siteUrl}/opengraph-image.jpg`,
+    `${siteUrl}/images/entrance-day.jpg`,
+    `${siteUrl}/images/interior-ambiance.jpg`,
+    `${siteUrl}/images/food-tandoori-chicken.jpg`,
+  ],
+  sameAs: [`https://instagram.com/${restaurant.instagram}`],
+  acceptsReservations: true,
+  hasMenu: `${siteUrl}${restaurant.menuPdf}`,
+  menu: `${siteUrl}${restaurant.menuPdf}`,
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: restaurant.googleRating.ratingValue,
+    reviewCount: restaurant.googleRating.reviewCount,
+    bestRating: 5,
+  },
 };
 
 export default function RootLayout({
