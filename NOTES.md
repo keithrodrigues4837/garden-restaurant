@@ -160,6 +160,34 @@ updated 2026-07-31: the feature was fully removed, not just paused).
     "best 6 per theme" picks are also saved at
     `C:\Users\keith\Desktop\themes\` (10 theme folders, 226 total sorted
     photos) if more homepage/marketing use is wanted later.
+13. **AI/chatbot discoverability (GEO), added 2026-08-10.** `src/app/robots.ts`
+    explicitly allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and 8
+    other AI crawlers (plus the wildcard `*` allow-all). `src/app/sitemap.ts`
+    lists all 4 routes. `public/llms.txt` is a machine-readable one-page summary
+    of the restaurant for AI systems to read directly. The site-wide `Restaurant`
+    JSON-LD in `layout.tsx` gained `sameAs` (Instagram), a real photo array,
+    `acceptsReservations`, `hasMenu`/`menu` (the PDF), and an `aggregateRating`
+    (4.2★, 1,250 reviews — user-provided real Google numbers, not fabricated).
+    The About page got a visible FAQ section (6 Q&As: cuisine, veg options,
+    location, hours, reservations, "no delivery/online ordering") plus matching
+    `FAQPage` JSON-LD — this is the part most likely to get quoted verbatim by
+    a chatbot. `restaurant.description` was lightly enriched with category-level
+    keywords (kebabs, biryani, dals) without naming specific dishes/prices, so it
+    won't drift out of sync with the PDF menu.
+14. **About page photo tiles → 4 rotating guest photos, added 2026-08-10.**
+    The two static food-photo tiles (tandoori chicken, seekh kebab) were first
+    swapped to dal makhani/tikka skewers, then per the user's follow-up request
+    replaced entirely with 4 real candid guest photos (`public/images/guests/
+    guest-1.jpg` … `guest-4.jpg`, resized from originals in `OneDrive\Desktop\
+    Garden album\Garden family\`). New component `src/components/
+    RotatingPairTiles.tsx`: 2 tiles, each cycling between 2 of the 4 photos
+    every 4s with a crossfade — same "mount everything eagerly, fade via
+    opacity" pattern as `ThemeTiles.tsx` (see item 12) to avoid the blank-tile
+    bug from that earlier session. **If asked to touch these tiles again, note
+    the 5 old food photos (`food-dal-makhani.jpg`, `food-tikka-skewers.jpg`,
+    `food-tandoori-chicken.jpg`, `food-seekh-kebab.jpg`,
+    `food-hara-bhara-kebab.jpg`) are now unused dead weight in `public/images/`**
+    — flagged for cleanup, not yet removed (see 2026-08-10 session summary).
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -183,12 +211,14 @@ Deployment is done (see top of file), Reserve a Table is live (see item 11 above
 homepage highlight tiles now cycle through 4 curated themes (item 12), hours are
 updated, the Menu page has been replaced by a PDF with a view/download choice
 (item 5), address text and a new floating button link to Google Maps (item 6c),
-and production has been re-verified after each change. Nothing outstanding except
-the deliberately-deferred AI assistant feature above — only revisit if the user
-brings it up.
+AI/chatbot discoverability is live (item 13), and the About page tiles now rotate
+4 guest photos (item 14). Nothing outstanding except the deliberately-deferred AI
+assistant feature above — only revisit if the user brings it up. **A full bug
+audit was done 2026-08-10 — see "Waiting on the user" item 3 below for the list
+awaiting the user's go-ahead before any of it is fixed.**
 
 Possible future asks, not yet requested: a custom domain (currently on the free
-`*.vercel.app` subdomain), analytics.
+`*.vercel.app` subdomain).
 
 **Waiting on the user (pick up next session):**
 1. **Menu update workflow.** User wants to be able to change the menu content
@@ -209,6 +239,33 @@ Possible future asks, not yet requested: a custom domain (currently on the free
    show iOS vs Android side by side, but **both screenshots were literally the
    same file** (identical timestamp/content) — flagged this to the user rather
    than guessing, asked them to resend the correct pair. Still waiting on that.
+3. **Full site bug/trends audit done 2026-08-10, nothing fixed yet — user said
+   "we'll pick this up tomorrow."** Read code + linted + clicked through every
+   page + checked console errors + cross-checked every image/video path against
+   disk. Findings, presented to the user but not yet approved:
+   - **Bugs:** (a) phone number is plain text, not a `tel:` link, on both the
+     Contact page and the footer (Reserve page already does this correctly —
+     just those two spots missing); (b) broken/mistyped URLs hit Next's raw
+     default 404 (plain black screen, off-brand, no "back home" link — header/
+     footer still render around it though); (c) minor — the Reserve form's
+     minimum selectable date is computed from UTC (`toISOString()`), so in the
+     ~5.5hr window right after midnight IST a visitor could technically pick an
+     already-past date.
+   - **Dead code to clean up:** `src/components/VegBadge.tsx` (unused since the
+     old menu system was removed), 5 now-unused food photos in `public/images/`
+     (see item 14 above), and the default `create-next-app` scaffold SVGs
+     (`file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` in
+     `public/`) which are never referenced anywhere.
+   - **Trend suggestions offered, all optional:** Vercel Analytics + Speed
+     Insights (cookieless, 2-line install, currently zero traffic visibility);
+     respecting `prefers-reduced-motion`/data-saver for the 9MB autoplay hero
+     video; adding 2-3 real quoted guest reviews as visible testimonials +
+     `Review` schema (builds on the aggregateRating already shipped); a few
+     standard security headers (`Referrer-Policy` etc.) in `next.config.ts`.
+   **Next session: ask which of these the user wants done, then implement and
+   push.** Don't assume "fix everything" — the bugs are safe/obvious, but the
+   trend suggestions need the user's buy-in first (especially the hero-video and
+   reviews ones, which involve a visible/content trade-off).
 
 ## 2026-08-05 session summary (new taglines, fixed Maps link, new theme photos)
 Short session, three quick follow-ups on the 2026-08-03 work:
