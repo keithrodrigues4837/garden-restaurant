@@ -11,8 +11,8 @@ export const restaurant = {
   description:
     "From tender tandoori kebabs and street-style chaat to rich flavourful curries. We bring vibrant North Indian recipes to life. The perfect table for family feasts, casual lunches, and evening get-togethers.",
   seating: 60,
-  hours: "Open daily, 1:00 PM – 11:00 PM",
-  hoursShort: "1:00 PM – 11:00 PM, daily",
+  hours: "Open 1:00 PM – 11:00 PM",
+  hoursShort: "1:00 PM – 11:00 PM",
   address,
   mapsUrl: "https://maps.app.goo.gl/jXAged3c1GWSGec87",
   phone: "+91 83790 43188",
