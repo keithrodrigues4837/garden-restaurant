@@ -23,7 +23,12 @@ export default function Footer() {
           <h3 className="mb-2 font-semibold text-cream">Hours</h3>
           <p>{restaurant.hoursShort}</p>
           <h3 className="mt-4 mb-2 font-semibold text-cream">Contact</h3>
-          <p>{restaurant.phone}{restaurant.phoneIsPlaceholder && " (placeholder)"}</p>
+          <p>
+            <a href={`tel:${restaurant.phone.replace(/\D/g, "")}`} className="hover:text-gold">
+              {restaurant.phone}
+            </a>
+            {restaurant.phoneIsPlaceholder && " (placeholder)"}
+          </p>
         </div>
 
         <div className="text-sm">

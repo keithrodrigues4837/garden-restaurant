@@ -38,7 +38,12 @@ export default function Contact() {
           <div>
             <h2 className="font-display text-lg font-semibold text-forest">Phone</h2>
             <p className="mt-1 text-forest/80">
-              {restaurant.phone}
+              <a
+                href={`tel:${restaurant.phone.replace(/\D/g, "")}`}
+                className="hover:text-gold-dark"
+              >
+                {restaurant.phone}
+              </a>
               {restaurant.phoneIsPlaceholder && (
                 <span className="ml-2 text-xs text-gold-dark">(placeholder — update me)</span>
               )}

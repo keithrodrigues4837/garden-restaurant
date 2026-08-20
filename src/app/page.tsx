@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeTiles, { type Theme } from "@/components/ThemeTiles";
 import MenuOptionsButton from "@/components/MenuOptionsButton";
+import HeroVideo from "@/components/HeroVideo";
 import { restaurant } from "@/lib/restaurant-info";
 
 const homepageThemes: Theme[] = [
@@ -59,16 +60,7 @@ export default function Home() {
   return (
     <div>
       <section className="relative overflow-hidden text-cream">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/images/hero-video-poster.jpg"
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/videos/hero-loop.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
         <div className="absolute inset-0 bg-forest/70" />
         <div className="relative mx-auto max-w-6xl px-4 py-24 text-center sm:px-6">
           <p className="font-display text-sm tracking-[0.3em] text-gold uppercase">

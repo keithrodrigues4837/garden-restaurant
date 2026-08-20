@@ -53,7 +53,7 @@ export default function ReservationForm() {
   const [partySize, setPartySize] = useState("2");
   const [notes, setNotes] = useState("");
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
   const digits = restaurant.phone.replace(/\D/g, "");
 
   function handleSubmit(e: React.FormEvent) {
