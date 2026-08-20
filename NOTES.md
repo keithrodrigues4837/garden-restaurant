@@ -299,6 +299,60 @@ may differ from training data — checked the actual doc files in
 `node_modules/next/dist/docs/` for `not-found.js` and `headers()` config before
 writing either, rather than assuming prior Next.js knowledge still applied.
 
+## 2026-08-20 session summary, continued (client copy from PPT)
+Same day as the bug/trend audit above, a second piece of work: user sent a PPTX
+(`Copy for Garden Website .pptx`, delivered via WhatsApp Desktop, 4 slides) with
+finished replacement copy. The deck was screenshots of the live site with new
+text underneath/beside each screenshot — unzipped it and read the slide XML
+directly (`.pptx` is a zip; no `python`/`pptx`-reading tool available in this
+environment, and the Read tool can't open binary `.pptx` files) to pull exact
+text and match each new caption to its screenshot by shape position in the XML
+(off-x/off-y coordinates), not just the order the text runs happened to
+appear in the file. Four changes, all pure copy swaps, no layout/design
+changes:
+1. **Homepage hero description** (`restaurant.description` in
+   `restaurant-info.ts`) — replaced. This one constant also feeds the meta
+   description, OG description, and Twitter card description in `layout.tsx`,
+   so all of those updated too as a side effect (expected, not a separate ask).
+2. **All 4 homepage theme tile names/taglines** (`homepageThemes` in
+   `src/app/page.tsx`, see item 12) — text-only swap, matched 1:1 to which
+   theme each new caption belonged with by cross-referencing the screenshot
+   images embedded in the PPTX slide (each new caption sat directly below a
+   screenshot of one specific old name+tagline pair):
+   - kitchen-action photos: "Flame. Focus. Flavour." → **"Magic in Motion" —
+     "Live fire, sizzling grills, and fresh dishes prepared to order"**
+   - tandoor-grills photos: "Fired, Not Faked." → **"A Front-Row View" —
+     "Watch our chefs work their magic from start to finish in our open
+     kitchen"**
+   - curries-gravies photos: "Depth Takes Time." → **"The Heart of Our
+     Kitchen" — "Freshly ground spices and traditional cooking techniques
+     behind every dish"**
+   - starters-snacks photos: "Small Plates. Big Intent." → **"Crafted with
+     Care" — "Our spice blends and marinades are all made in-house"**
+   Photo sets per theme are unchanged — only the name/tagline text moved.
+3. **"Perfect for Family Get-Togethers" section body** (`src/app/page.tsx`)
+   — paragraph replaced; kept `{restaurant.seating}` as a variable rather than
+   hardcoding "60" from the deck, so it still stays in sync with
+   `restaurant-info.ts` if seating ever changes. Heading text itself was
+   unchanged (the deck didn't include new heading copy for this one).
+4. **About page intro** (`src/app/about/page.tsx`) — the old 2-paragraph
+   intro was replaced with 3 new paragraphs from the deck's "Copy for about
+   page" slide, including a real founding-story detail not previously on the
+   site: **established 2012 by husband-and-wife team Lionel and Bhairavi
+   Rodrigues.** (Matches the "Lionel" name seen in the 2026-08-05 session's
+   proposal-package folder — same person, now confirmed as a co-owner.) Kept
+   `{restaurant.seating}` dynamic here too rather than hardcoding "60." The
+   "We're open {hoursShort}." line after the intro was left as-is (not part
+   of the deck's copy, but still accurate/useful, so kept).
+
+All four verified locally (`eslint`, `build`, browser click-through on Home and
+About) before pushing, then pushed straight to production (no "let me see it
+first" request this time, unlike some past photo/color changes — client copy
+from a finished deck was treated as pre-approved, not a proposal to review).
+**If a "Lionel" founding story or these exact theme names show up as
+unfamiliar again, check `src/app/page.tsx` and `about/page.tsx` directly — this
+is now the live copy, not a draft.**
+
 ## 2026-08-05 session summary (new taglines, fixed Maps link, new theme photos)
 Short session, three quick follow-ups on the 2026-08-03 work:
 
