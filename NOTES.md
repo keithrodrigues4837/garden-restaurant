@@ -183,11 +183,26 @@ updated 2026-07-31: the feature was fully removed, not just paused).
     RotatingPairTiles.tsx`: 2 tiles, each cycling between 2 of the 4 photos
     every 4s with a crossfade — same "mount everything eagerly, fade via
     opacity" pattern as `ThemeTiles.tsx` (see item 12) to avoid the blank-tile
-    bug from that earlier session. **If asked to touch these tiles again, note
-    the 5 old food photos (`food-dal-makhani.jpg`, `food-tikka-skewers.jpg`,
-    `food-tandoori-chicken.jpg`, `food-seekh-kebab.jpg`,
-    `food-hara-bhara-kebab.jpg`) are now unused dead weight in `public/images/`**
-    — flagged for cleanup, not yet removed (see 2026-08-10 session summary).
+    bug from that earlier session. **Cleanup done 2026-08-20:** of the 5 old
+    food photos, 4 were unused dead weight and got deleted (`food-dal-makhani.jpg`,
+    `food-tikka-skewers.jpg`, `food-seekh-kebab.jpg`, `food-hara-bhara-kebab.jpg`)
+    — `food-tandoori-chicken.jpg` is still referenced (site-wide `Restaurant`
+    JSON-LD `image` array in `layout.tsx`), so it was kept.
+15. **Bug fixes + trend improvements, added 2026-08-20** (see that session
+    summary below for the full list): phone number is now a `tel:` link in
+    the footer and Contact page; `src/app/not-found.tsx` is a branded 404
+    page (matches site styling, Header/Footer still render around it, links
+    to Home and Reserve); the Reserve form's date picker `min` now computes
+    "today" in `Asia/Kolkata` instead of UTC; Vercel Analytics + Speed
+    Insights are wired into `layout.tsx`; the homepage hero video
+    (`src/components/HeroVideo.tsx`, client component) now only autoplays
+    if the visitor doesn't have `prefers-reduced-motion` set and isn't on a
+    Data Saver / slow connection — otherwise it just shows the poster image,
+    no video fetch at all; `next.config.ts` sets standard security headers
+    (HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+    Permissions-Policy) site-wide. Also removed dead code: unused
+    `VegBadge.tsx` and the default `create-next-app` scaffold SVGs
+    (`file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg`).
 
 ## Known deferred features (deliberately not built — user's choice, don't re-raise unprompted)
 - **AI Q&A/upsell assistant** (Claude API, not chat-ordering) — was mid-setup in an
@@ -211,11 +226,12 @@ Deployment is done (see top of file), Reserve a Table is live (see item 11 above
 homepage highlight tiles now cycle through 4 curated themes (item 12), hours are
 updated, the Menu page has been replaced by a PDF with a view/download choice
 (item 5), address text and a new floating button link to Google Maps (item 6c),
-AI/chatbot discoverability is live (item 13), and the About page tiles now rotate
-4 guest photos (item 14). Nothing outstanding except the deliberately-deferred AI
-assistant feature above — only revisit if the user brings it up. **A full bug
-audit was done 2026-08-10 — see "Waiting on the user" item 3 below for the list
-awaiting the user's go-ahead before any of it is fixed.**
+AI/chatbot discoverability is live (item 13), the About page tiles now rotate
+4 guest photos (item 14), and the full bug/trend audit from 2026-08-10 has been
+actioned — bugs fixed, dead code removed, all four trend suggestions shipped
+except testimonials (item 15). Nothing outstanding except the deliberately-deferred
+AI assistant feature above and the testimonials/Review-schema item below — only
+revisit if the user brings them up.
 
 Possible future asks, not yet requested: a custom domain (currently on the free
 `*.vercel.app` subdomain).
@@ -239,33 +255,49 @@ Possible future asks, not yet requested: a custom domain (currently on the free
    show iOS vs Android side by side, but **both screenshots were literally the
    same file** (identical timestamp/content) — flagged this to the user rather
    than guessing, asked them to resend the correct pair. Still waiting on that.
-3. **Full site bug/trends audit done 2026-08-10, nothing fixed yet — user said
-   "we'll pick this up tomorrow."** Read code + linted + clicked through every
-   page + checked console errors + cross-checked every image/video path against
-   disk. Findings, presented to the user but not yet approved:
-   - **Bugs:** (a) phone number is plain text, not a `tel:` link, on both the
-     Contact page and the footer (Reserve page already does this correctly —
-     just those two spots missing); (b) broken/mistyped URLs hit Next's raw
-     default 404 (plain black screen, off-brand, no "back home" link — header/
-     footer still render around it though); (c) minor — the Reserve form's
-     minimum selectable date is computed from UTC (`toISOString()`), so in the
-     ~5.5hr window right after midnight IST a visitor could technically pick an
-     already-past date.
-   - **Dead code to clean up:** `src/components/VegBadge.tsx` (unused since the
-     old menu system was removed), 5 now-unused food photos in `public/images/`
-     (see item 14 above), and the default `create-next-app` scaffold SVGs
-     (`file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` in
-     `public/`) which are never referenced anywhere.
-   - **Trend suggestions offered, all optional:** Vercel Analytics + Speed
-     Insights (cookieless, 2-line install, currently zero traffic visibility);
-     respecting `prefers-reduced-motion`/data-saver for the 9MB autoplay hero
-     video; adding 2-3 real quoted guest reviews as visible testimonials +
-     `Review` schema (builds on the aggregateRating already shipped); a few
-     standard security headers (`Referrer-Policy` etc.) in `next.config.ts`.
-   **Next session: ask which of these the user wants done, then implement and
-   push.** Don't assume "fix everything" — the bugs are safe/obvious, but the
-   trend suggestions need the user's buy-in first (especially the hero-video and
-   reviews ones, which involve a visible/content trade-off).
+3. **Guest testimonials + `Review` schema — the one trend suggestion still not
+   done.** Everything else from the 2026-08-10 bug/trend audit was actioned on
+   2026-08-20 (see that session summary below). This one needs 2-3 real,
+   attributable guest quotes from the user (name + quote, ideally something
+   they'd be comfortable seeing published on the site and in Google's search
+   results) — same "no fabricated content" rule as the aggregateRating numbers
+   (item 13). Don't invent placeholder reviews; ask the user for real ones when
+   this comes up.
+
+## 2026-08-20 session summary (bug/trend audit actioned)
+Picked up the 2026-08-10 audit ("we'll pick this up tomorrow" — actually 10 days
+later) — user said "let's tackle all of them," so did everything except the
+testimonials item (needs real guest quotes from the user, see "Waiting on the
+user" item 3 above). All changes verified with `npx eslint .` (clean),
+`npm run build` (clean), and a browser click-through (homepage, 404 page, Reserve
+page) against the local dev server before pushing; security headers re-verified
+live on production via `curl -I` after deploy. Full detail in item 15 above
+("Current state"); summary:
+- Bugs fixed: `tel:` links (Footer, Contact), branded `src/app/not-found.tsx`,
+  Reserve form date `min` now IST-based (`Asia/Kolkata`) instead of UTC.
+- Dead code removed: `VegBadge.tsx`, 4 of the 5 unused food photos (kept
+  `food-tandoori-chicken.jpg` — still referenced in the JSON-LD `image` array,
+  caught this before deleting), 5 scaffold SVGs.
+- Trends shipped: Vercel Analytics + Speed Insights (`@vercel/analytics`,
+  `@vercel/speed-insights`, both added to `layout.tsx`); `next.config.ts`
+  security headers; hero video now respects `prefers-reduced-motion` and
+  Data Saver/slow connections via a new `HeroVideo.tsx` client component.
+  **Implementation note on `HeroVideo.tsx`:** first pass used `useState` +
+  `useEffect` to detect these browser conditions on mount, but this repo's
+  ESLint config (`eslint-config-next` core-web-vitals) enforces
+  `react-hooks/set-state-in-effect` and failed the build — rewrote using
+  `useSyncExternalStore` instead (subscribes to `matchMedia`/`navigator.connection`
+  change events, `getServerSnapshot` returns `false` so SSR/first paint always
+  shows just the poster image, no hydration mismatch). If touching this
+  component again, don't revert to the naive `useEffect` + `setState` pattern —
+  it'll fail lint.
+- Testimonials/`Review` schema: not done, needs real content — see "Waiting on
+  the user" item 3.
+
+Also noticed `AGENTS.md` (auto-loaded via `CLAUDE.md`) warns this Next.js version
+may differ from training data — checked the actual doc files in
+`node_modules/next/dist/docs/` for `not-found.js` and `headers()` config before
+writing either, rather than assuming prior Next.js knowledge still applied.
 
 ## 2026-08-05 session summary (new taglines, fixed Maps link, new theme photos)
 Short session, three quick follow-ups on the 2026-08-03 work:
