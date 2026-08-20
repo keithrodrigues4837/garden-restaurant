@@ -9,7 +9,7 @@ export const restaurant = {
   name: "The Garden Restaurant",
   tagline: "Authentic North Indian Cuisine",
   description:
-    "Flavourful tandoori starters, kebabs, sizzling grills, biryani, and rich curries and dals — vegetarian and non-vegetarian — served with fresh Indian flatbreads and delectable desserts. The perfect spot for intimate gatherings and family get-togethers.",
+    "From tender tandoori kebabs and street-style chaat to rich flavourful curries. We bring vibrant North Indian recipes to life. The perfect table for family feasts, casual lunches, and evening get-togethers.",
   seating: 60,
   hours: "Open daily, 1:00 PM – 11:00 PM",
   hoursShort: "1:00 PM – 11:00 PM, daily",

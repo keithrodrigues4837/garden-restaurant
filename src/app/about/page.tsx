@@ -79,18 +79,21 @@ export default function About() {
 
       <div className="mt-8 space-y-5 text-forest/80">
         <p>
-          {restaurant.name}{" "}
-          brings an authentic North Indian culinary experience to Colva,
-          Goa. From flavourful starters and sizzling tandoori dishes to rich, slow-cooked
-          gravies, every dish is prepared with both vegetarian and non-vegetarian guests in
-          mind — complemented by fresh Indian flatbreads and delectable desserts.
+          Established in 2012 by husband-and-wife team Lionel and Bhairavi Rodrigues,{" "}
+          {restaurant.name} was founded to bring rich, diverse North Indian dining to South
+          Goa.
         </p>
         <p>
-          Set within La Ben Resort on Colva Beach Rd, our restaurant seats up to{" "}
-          {restaurant.seating}{" "}
-          guests, making it the perfect spot for intimate gatherings and
-          family get-togethers. Whether you&apos;re celebrating a special occasion or simply
-          craving a comforting home-style curry, we welcome you to dine in.
+          We take equal pride in our vegetarian and non-vegetarian dishes, serving
+          street-style chaat, sizzling tandoori kebabs, and deeply flavourful curries crafted
+          from scratch. All prepared in an open kitchen where you can watch every dish come
+          together.
+        </p>
+        <p>
+          Set inside La Ben Resort on Colva Beach Road, our cozy {restaurant.seating}-seat
+          restaurant welcomes you for every occasion. Whether you are gathering with family
+          or sharing a quiet dinner, we invite you to take a seat and enjoy food cooked with
+          care.
         </p>
         <p>We&apos;re open {restaurant.hoursShort}.</p>
       </div>

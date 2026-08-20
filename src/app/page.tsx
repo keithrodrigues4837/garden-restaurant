@@ -7,8 +7,8 @@ import { restaurant } from "@/lib/restaurant-info";
 
 const homepageThemes: Theme[] = [
   {
-    name: "Flame. Focus. Flavour.",
-    tagline: "Every dish earns its place before it earns its plate.",
+    name: "Magic in Motion",
+    tagline: "Live fire, sizzling grills, and fresh dishes prepared to order",
     images: [
       "/images/homepage-themes/kitchen-action/1.jpg",
       "/images/homepage-themes/kitchen-action/2.jpg",
@@ -19,8 +19,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Fired, Not Faked.",
-    tagline: "Real char. Real smoke. Real tandoor.",
+    name: "A Front-Row View",
+    tagline: "Watch our chefs work their magic from start to finish in our open kitchen",
     images: [
       "/images/homepage-themes/tandoor-grills/1.jpg",
       "/images/homepage-themes/tandoor-grills/2.jpg",
@@ -31,8 +31,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Depth Takes Time.",
-    tagline: "Nothing here is rushed. Nothing here is ordinary.",
+    name: "The Heart of Our Kitchen",
+    tagline: "Freshly ground spices and traditional cooking techniques behind every dish",
     images: [
       "/images/homepage-themes/curries-gravies/1.jpg",
       "/images/homepage-themes/curries-gravies/2.jpg",
@@ -43,8 +43,8 @@ const homepageThemes: Theme[] = [
     ],
   },
   {
-    name: "Small Plates. Big Intent.",
-    tagline: "The first bite decides everything.",
+    name: "Crafted with Care",
+    tagline: "Our spice blends and marinades are all made in-house",
     images: [
       "/images/homepage-themes/starters-snacks/1.jpg",
       "/images/homepage-themes/starters-snacks/2.jpg",
@@ -110,8 +110,9 @@ export default function Home() {
               Perfect for Family Get-Togethers
             </h2>
             <p className="mt-4 max-w-2xl text-forest/80">
-              With seating for {restaurant.seating} guests at La Ben Resort, Colva, we welcome
-              intimate gatherings and family celebrations alike.
+              Whether it&apos;s a relaxed family feast or an intimate celebration, our{" "}
+              {restaurant.seating}-seat dining space at La Ben Resort in Colva is built for
+              sharing great meals.
             </p>
             <MenuOptionsButton
               align="left"
